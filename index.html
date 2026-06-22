@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדד נדל"ן ישראל — נתוני שוק 2025</title>
+<meta name="description" content="נתוני שוק הנדל"ן הישראלי לציבור, למשקיעים ולמקבלי החלטות — מבוסס נתוני הלמ"ס">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--green-light:#E1F5EE;--green-mid:#9FE1CB;--green-dark:#0F6E56;--green-deep:#085041;
+  --blue:#185FA5;--blue-light:#E6F1FB;--blue-mid:#B5D4F4;
+  --purple:#534AB7;--purple-light:#EEEDFE;--purple-mid:#AFA9EC;
+  --amber:#BA7517;--amber-light:#FAEEDA;--amber-mid:#FAC775;
+  --red:#E24B4A;--red-light:#FCEBEB;
+  --gray-50:#F8F9FA;--gray-100:#F1EFE8;--gray-200:#D3D1C7;--gray-400:#888780;--gray-700:#444441;--gray-900:#2C2C2A;
+  --text:#1a1a18;--text-2:#5a5a58;--text-3:#9a9a98;
+  --border:rgba(0,0,0,0.1);--border-2:rgba(0,0,0,0.15);
+  --radius:12px;--radius-sm:8px;--shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:#F8F9FA;color:var(--text);direction:rtl;min-height:100vh}
+
+/* HEADER */
+.site-header{background:white;border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:1rem 0 0.75rem}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:40px;height:40px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;flex-shrink:0}
+.logo-text{font-size:20px;font-weight:600;color:var(--text)}
+.logo-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.header-badge{background:var(--green-light);color:var(--green-dark);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;border:0.5px solid var(--green-mid);white-space:nowrap}
+.nav{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:10px 16px;font-size:13px;font-family:'Heebo',sans-serif;border:none;background:transparent;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.15s;font-weight:400}
+.nav-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:500}
+.nav-btn:hover:not(.active){color:var(--text)}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+.container{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+.page-hero{margin-bottom:2rem}
+.page-title{font-size:24px;font-weight:600;color:var(--text);margin-bottom:6px}
+.page-desc{font-size:14px;color:var(--text-2);line-height:1.6;max-width:680px}
+
+/* ALERT BOX */
+.alert{background:var(--amber-light);border:0.5px solid var(--amber-mid);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;gap:12px}
+.alert-icon{color:var(--amber);font-size:20px;flex-shrink:0;line-height:1}
+.alert-body strong{display:block;font-size:13px;font-weight:600;color:#412402;margin-bottom:4px}
+.alert-body p{font-size:13px;color:#633806;line-height:1.6}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:1.5rem}
+.kpi-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.kpi-card:hover{border-color:var(--green);box-shadow:0 4px 12px rgba(29,158,117,0.08)}
+.kpi-card.open{border-color:var(--green);box-shadow:0 4px 12px rgba(29,158,117,0.12)}
+.kpi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.kpi-cat{font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;letter-spacing:0.03em}
+.cat-d{background:var(--green-light);color:var(--green-dark)}
+.cat-s{background:var(--blue-light);color:var(--blue)}
+.cat-f{background:var(--purple-light);color:var(--purple)}
+.cat-w{background:#FAECE7;color:#993C1D}
+.cat-p{background:var(--amber-light);color:var(--amber)}
+.kpi-chg{font-size:13px;font-weight:600}
+.up{color:var(--green)}.down{color:var(--red)}.neu{color:var(--text-3)}
+.kpi-label{font-size:12px;color:var(--text-2);margin-bottom:4px}
+.kpi-value{font-size:26px;font-weight:600;color:var(--text);line-height:1.1}
+.kpi-unit{font-size:13px;font-weight:400;color:var(--text-2)}
+.kpi-bottom{font-size:12px;color:var(--green-dark);margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);line-height:1.5}
+.kpi-hint{font-size:11px;color:var(--text-3);margin-top:4px}
+
+/* DETAIL PANEL */
+.detail-panel{background:var(--gray-50);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:none;animation:fadeIn 0.2s ease}
+.detail-panel.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.dl{font-size:11px;color:var(--text-2);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.dv{font-size:13px;color:var(--text);line-height:1.6}
+.bl-box{background:var(--green-deep);color:white;border-radius:var(--radius-sm);padding:14px 18px;font-size:14px;line-height:1.6}
+.bl-box em{display:block;font-size:11px;opacity:0.6;margin-bottom:4px;font-style:normal;letter-spacing:0.05em}
+
+/* CHART CARD */
+.chart-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.chart-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.chart-card-sub{font-size:12px;color:var(--text-2);margin-bottom:1.25rem}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1rem}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.fstep{display:flex;align-items:center;gap:14px;padding:14px 18px;background:white;border:0.5px solid var(--border);border-radius:var(--radius-sm);transition:border-color 0.15s}
+.fstep.warn{border-color:var(--red);background:var(--red-light)}
+.fstep.good{border-color:var(--green);background:var(--green-light)}
+.ficon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fcontent{flex:1}
+.ftitle{font-size:13px;font-weight:600}
+.fvalue{font-size:22px;font-weight:600;margin-top:2px}
+.fnote{font-size:12px;color:var(--text-2);margin-top:2px}
+.ftag{font-size:11px;margin-top:4px;font-weight:500}
+.fchev{color:var(--text-3);font-size:18px}
+
+/* DISTRICT GRID */
+.district-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:1.5rem}
+.district-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem}
+.district-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px}
+.district-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);padding:4px 0;border-bottom:0.5px solid var(--border)}
+.district-row:last-of-type{border:none}
+.district-row span:last-child{font-weight:500;color:var(--text)}
+.mini-bar{height:4px;background:var(--gray-100);border-radius:2px;margin-top:8px}
+.mini-bar-fill{height:4px;border-radius:2px;background:var(--green)}
+
+/* INSIGHTS */
+.insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:1.5rem}
+.insight-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.insight-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.insight-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.conf-badge{font-size:10px;padding:3px 9px;border-radius:8px;white-space:nowrap;flex-shrink:0;font-weight:600}
+.conf-h{background:#EAF3DE;color:#3B6D11}
+.conf-m{background:var(--amber-light);color:#854F0B}
+.insight-data{font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6}
+.insight-next{font-size:12px;color:var(--text);padding:10px 12px;background:var(--gray-50);border-radius:var(--radius-sm);line-height:1.5;border-right:3px solid var(--green)}
+.insight-next strong{display:block;font-size:10px;color:var(--green-dark);margin-bottom:3px;font-weight:600;letter-spacing:0.04em}
+
+/* COMPARE CARDS */
+.year-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1.5rem}
+@media(max-width:600px){.year-cards{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.insight-grid{grid-template-columns:1fr}.district-grid{grid-template-columns:1fr}.header-badge{display:none}}
+.year-card{border-radius:var(--radius);padding:1.25rem;border:0.5px solid}
+.yc-label{font-size:11px;font-weight:600;margin-bottom:10px;letter-spacing:0.04em}
+.yc-items{font-size:13px;line-height:2}
+
+/* FOOTER */
+.site-footer{background:white;border-top:0.5px solid var(--border);padding:1.5rem;text-align:center;margin-top:2rem}
+.site-footer p{font-size:12px;color:var(--text-3)}
+.site-footer a{color:var(--green);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">🏗️</div>
+        <div>
+          <div class="logo-text">מדד נדל"ן ישראל</div>
+          <div class="logo-sub">נתוני הלמ"ס — לבני אדם</div>
+        </div>
+      </div>
+      <div class="header-badge">🔄 מעודכן לסיכום 2025</div>
+    </div>
+    <nav class="nav" role="navigation" aria-label="ניווט ראשי">
+      <button class="nav-btn active" onclick="showPage('overview')" aria-current="page">📊 סקירת שוק</button>
+      <button class="nav-btn" onclick="showPage('pipeline')">🔧 צינור הדיור</button>
+      <button class="nav-btn" onclick="showPage('compare')">📅 2023–2025</button>
+      <button class="nav-btn" onclick="showPage('districts')">🗺️ מחוזות</button>
+      <button class="nav-btn" onclick="showPage('bottom')">💡 שורה תחתונה</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== OVERVIEW ===== -->
+<div id="page-overview" class="page active">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">סקירת שוק 2025</div>
+    <div class="page-desc">8 מדדי מפתח מסיכום שנת 2025 של הלמ"ס. כל נתון מוסבר — לא רק מספר, גם הסיפור מאחוריו. לחץ על כרטיס לניתוח מעמיק.</div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-body">
+      <strong>הסיפור הגדול של 2025: היצע שיא, ביקוש נחלש</strong>
+      <p>2024 הייתה שנת ריבאונד עם 103,185 עסקאות. 2025 ירדה ל-90,690 (-11.9%). אבל בצד ההיצע — שיא היסטורי: 80,010 התחלות בנייה ו-207,200 דירות בבנייה פעילה. המאזן משתנה — לטובת הקונה.</p>
+    </div>
+  </div>
+
+  <div class="kpi-grid" id="kpi-grid"></div>
+  <div id="detail-panel" class="detail-panel"></div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">מכירות דירות — 2023–2025</div>
+    <div class="chart-card-sub">השוואה שנתית: סך הכל / חדשות / יד שנייה</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>סך הכל</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>דירות חדשות</span>
+      <span class="li"><span class="ld" style="background:#9FE1CB"></span>יד שנייה</span>
+    </div>
+    <div style="position:relative;height:260px"><canvas id="salesChart" aria-label="גרף מכירות דירות 2023-2025"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">צינור הבנייה — 2022–2025</div>
+    <div class="chart-card-sub">היתרים / התחלות / גמרים לפי שנה</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#534AB7"></span>היתרים</span>
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>התחלות</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>גמרים</span>
+    </div>
+    <div style="position:relative;height:260px"><canvas id="pipeChart" aria-label="גרף צינור הבנייה 2022-2025"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PIPELINE ===== -->
+<div id="page-pipeline" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">צינור הדיור — 2025</div>
+    <div class="page-desc">המסע של דירה — מהיתר עד מפתח בדלת. בכל שלב: מה הנתון אומר, ואיפה יש צוואר בקבוק.</div>
+  </div>
+
+  <div class="funnel" id="funnel-wrap"></div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">מטרת הבנייה — 2025</div>
+    <div class="chart-card-sub">70.2% מהדירות שהחלה בנייתן מיועדות למכירה. 15.7% — בסבסוד ממשלתי.</div>
+    <div style="position:relative;height:220px"><canvas id="purposeChart" aria-label="תרשים עוגה מטרת הבנייה"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">משך בנייה ממוצע — מגמה 2020–2025</div>
+    <div class="chart-card-sub">חודשים עד גמר בנייה. הצינור מתארך — כל דירה לוקחת יותר זמן.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#E24B4A"></span>ממוצע משוקלל לפי גודל בניין</span>
+      <span class="li"><span class="ld" style="background:#BA7517;border:1px dashed #BA7517"></span>ממוצע פשוט</span>
+    </div>
+    <div style="position:relative;height:220px"><canvas id="durationChart" aria-label="גרף משך בנייה ממוצע"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== COMPARE ===== -->
+<div id="page-compare" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">השוואה 2023–2025</div>
+    <div class="page-desc">שלוש שנים, שלושה סיפורים שונים על אותו שוק.</div>
+  </div>
+
+  <div class="year-cards">
+    <div class="year-card" style="background:#FCEBEB;border-color:#F7C1C1">
+      <div class="yc-label" style="color:#A32D2D">2023 — שנת הקיפאון</div>
+      <div class="yc-items" style="color:#501313">
+        71,405 עסקאות 📉<br>
+        ריבית גבוהה<br>
+        מלאי מצטבר<br>
+        קבלנים בלחץ
+      </div>
+    </div>
+    <div class="year-card" style="background:var(--green-light);border-color:var(--green-mid)">
+      <div class="yc-label" style="color:var(--green-dark)">2024 — שנת הריבאונד</div>
+      <div class="yc-items" style="color:var(--green-deep)">
+        103,185 עסקאות 🚀<br>
+        +67% מ-2023<br>
+        ביקוש מתפרץ<br>
+        גמרים ירדו
+      </div>
+    </div>
+    <div class="year-card" style="background:var(--amber-light);border-color:var(--amber-mid)">
+      <div class="yc-label" style="color:#854F0B">2025 — נורמליזציה?</div>
+      <div class="yc-items" style="color:#412402">
+        90,690 עסקאות ↘<br>
+        -11.9% מ-2024<br>
+        היצע בשיא<br>
+        מלאי גדל
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">השוואת מדדי מפתח — 2023 / 2024 / 2025</div>
+    <div class="chart-card-sub">כל עמודה = אלפי דירות. בנייה פעילה חולקה ב-4 לצרכי קנה מידה.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#AFA9EC"></span>2023</span>
+      <span class="li"><span class="ld" style="background:#534AB7"></span>2024</span>
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>2025</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="compareChart" aria-label="גרף השוואה 3 שנים"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">מלאי חדשות למכירה וחודשי היצע — 2022–2026</div>
+    <div class="chart-card-sub">מגמת עלייה מ-2022. בינואר 2026: 86,290 דירות, 31.4 חודשי היצע.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#E24B4A"></span>מלאי (אלפי דירות)</span>
+      <span class="li"><span class="ld" style="background:#BA7517"></span>חודשי היצע</span>
+    </div>
+    <div style="position:relative;height:240px"><canvas id="inventoryChart" aria-label="גרף מלאי וחודשי היצע"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== DISTRICTS ===== -->
+<div id="page-districts" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">נתוני מחוזות — 2025</div>
+    <div class="page-desc">שוק הנדל"ן הישראלי הוא לא שוק אחד — הוא שישה שווקים שונים עם דינמיקה שונה לכל אחד.</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">מכירות לפי מחוז — 2025 מול 2024</div>
+    <div class="chart-card-sub">כל המחוזות ירדו בדירות חדשות. תמונה מעורבת ביד שנייה.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>חדשות 2025</span>
+      <span class="li"><span class="ld" style="background:#9FE1CB"></span>חדשות 2024</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>יד שנייה 2025</span>
+      <span class="li"><span class="ld" style="background:#B5D4F4"></span>יד שנייה 2024</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="districtChart" aria-label="גרף מכירות לפי מחוז"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">היתרי בנייה לפי מחוז — 2025 מול 2024</div>
+    <div class="chart-card-sub">מחוז המרכז מוביל עם 20,312 דירות שקיבלו היתר ב-2025</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#534AB7"></span>2025</span>
+      <span class="li"><span class="ld" style="background:#AFA9EC"></span>2024</span>
+    </div>
+    <div style="position:relative;height:280px"><canvas id="permitsChart" aria-label="גרף היתרים לפי מחוז"></canvas></div>
+  </div>
+
+  <div class="district-grid" id="district-grid"></div>
+</div>
+</div>
+
+<!-- ===== BOTTOM LINE ===== -->
+<div id="page-bottom" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">שורה תחתונה — 2025</div>
+    <div class="page-desc">לא תחזיות נחרצות — תובנות מבוססות נתוני הלמ"ס האחרונים. כל כרטיס כולל רמת ודאות ומה לעקוב אחריו.</div>
+  </div>
+
+  <div class="insight-grid" id="insight-grid"></div>
+
+  <div class="chart-card">
+    <div class="chart-card-title">מאזן שוק — 2025 לעומת 2024</div>
+    <div class="chart-card-sub">6 מדדים, נורמלזציה ל-100. ירוק = 2025, סגול = 2024.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>2025</span>
+      <span class="li"><span class="ld" style="background:#534AB7"></span>2024</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="radarChart" aria-label="מכ&quot;מ מאזן שוק 2025 vs 2024"></canvas></div>
+  </div>
+
+  <div class="chart-card" style="background:var(--green-deep);border-color:var(--green-dark)">
+    <div style="color:rgba(255,255,255,0.6);font-size:11px;font-weight:600;letter-spacing:0.05em;margin-bottom:8px">מסקנה מרכזית</div>
+    <div style="color:white;font-size:16px;font-weight:600;line-height:1.6;margin-bottom:12px">
+      שוק 2025 הוא שוק של מעבר — מביקוש שולט להיצע שולט.
+    </div>
+    <div style="color:rgba(255,255,255,0.8);font-size:13px;line-height:1.7">
+      207,200 דירות בצינור, 86,090 מלאי, 80,010 התחלות שיא — מול 90,690 עסקאות בלבד.
+      מי שמחזיק דירה חדשה למכירה ולא מוכר — ישב על לחץ הולך וגובר.
+      מי שמחפש לקנות — הכוח עובר אליו.
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <p>מבוסס נתוני <a href="https://www.cbs.gov.il" target="_blank" rel="noopener">הלמ"ס — הלשכה המרכזית לסטטיסטיקה</a> | סיכום שנת 2025 | עדכון: מרץ 2026</p>
+  <p style="margin-top:4px">האתר מיועד למטרות מידע בלבד ואינו מהווה ייעוץ השקעות</p>
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const KPIs = [
+  {id:'sales',title:'דירות שנמכרו',value:'90,690',cat:'ביקוש',cc:'cat-d',chg:'-11.9%',dir:'down',
+   wm:'קצב ספיגת השוק — כמה דירות עוברות ידיים בפועל',
+   wi:'ירידה מהשיא של 2024, אבל עדיין 26.9% מעל 2023. ריכוך, לא קריסה.',
+   bl:'קצב העסקאות הוא מדד הספיגה של השוק. 2025 חזרה לרמה נורמלית אחרי שיא 2024.',
+   rel:'ריבית, מלאי, הכנסה, מדד מחירים',src:'הלמ"ס — סיכום שנת 2025, פברואר 2026'},
+  {id:'new',title:'דירות חדשות שנמכרו',value:'34,030',cat:'ביקוש',cc:'cat-d',chg:'-25.5%',dir:'down',
+   wm:'כוח המכירה של קבלנים — האם ההיצע פוגש ביקוש',
+   wi:'ירידה חדה של 25.5%. 37.5% מהשוק. 29.9% בסבסוד ממשלתי — ללא סבסוד, עוד חלש יותר.',
+   bl:'זה הנתון שמראה האם הקבלנים מצליחים לפגוש את הביקוש. 2025 — ממש לא.',
+   rel:'מלאי חדשות, חודשי היצע, סבסוד',src:'הלמ"ס — סיכום שנת 2025'},
+  {id:'starts',title:'התחלות בנייה',value:'80,010',cat:'תכנון עתידי',cc:'cat-f',chg:'+14.6%',dir:'up',
+   wm:'שלב כניסת פרויקט לביצוע — חשוב יותר מהיתר, אבל עדיין לא דירה זמינה',
+   wi:'שיא היסטורי. הקבלנים ממשיכים לבנות למרות ביקוש חלש — אמון ארוך טווח.',
+   bl:'התחלות הן הצינור שמזרים את ההיצע העתידי. 80,010 — ההתחלות של 2025 הן הגמרים של 2027-28.',
+   rel:'גמר בנייה, בנייה פעילה, היתרים',src:'הלמ"ס — 19.3.2026'},
+  {id:'completions',title:'גמר בנייה',value:'59,750',cat:'היצע',cc:'cat-s',chg:'+9.8%',dir:'up',
+   wm:'ההיצע שהופך לדירה זמינה בפועל — הכי קרוב להשפעה אמיתית על השוק',
+   wi:'עלייה ל-59,750 אחרי ירידה ב-2024. הדירות מגיעות — אבל המכירות לא מדביקות.',
+   bl:'גמרי בנייה הם המקום שבו התכנון הופך למפתח בדלת. עלייה של 9.8% ב-2025.',
+   rel:'בנייה פעילה, מלאי, מכירות',src:'הלמ"ס — 19.3.2026'},
+  {id:'active',title:'דירות בבנייה פעילה',value:'207,200',cat:'היצע',cc:'cat-s',chg:'+10.9%',dir:'up',
+   wm:'כלל הדירות הנמצאות בדרך לשוק — ההיצע שטרם הגיע',
+   wi:'שיא מוחלט. כמחצית במחוז ת"א ומרכז. הצינור הגדול ביותר בהיסטוריה.',
+   bl:'בנייה פעילה גבוהה היא ההיצע שמחכה להפוך למציאות. 207K — שאלה גדולה: מי יקנה?',
+   rel:'גמרים, משך בנייה, מכירות, מלאי',src:'הלמ"ס — סוף Q3 2025'},
+  {id:'permits',title:'היתרי בנייה',value:'81,230',cat:'תכנון עתידי',cc:'cat-f',chg:'+2.2%',dir:'up',
+   wm:'דירות שיכולות להתחיל בנייה — הבטחה להיצע, לא היצע בפועל',
+   wi:'60.5% מהיתרי Q4 טרם התחילו. היתר אינו בנייה. מרכז (25%) ות"א (23.5%) מובילים.',
+   bl:'היתרים הם הבטחה להיצע, לא היצע בפועל. הפער בין היתר להתחלה — חודשים עד שנים.',
+   rel:'התחלות, גמרים, בנייה פעילה',src:'הלמ"ס — 19.3.2026'},
+  {id:'inventory',title:'מלאי חדשות למכירה',value:'86,090',cat:'היצע',cc:'cat-s',chg:'↑ מגמה',dir:'down',
+   wm:'כמה דירות חדשות ממתינות לקונה — מדד מאזן הכוח בשוק',
+   wi:'29.2 חודשי היצע. 30.8% בתל אביב. מגמת עלייה מ-2022 — סימן ללחץ על קבלנים.',
+   bl:'מלאי גבוה לא תמיד מוריד מחיר — אבל הוא משנה את מאזן הכוח לטובת הקונה.',
+   rel:'מכירות חדשות, חודשי היצע, מחירים',src:'הלמ"ס — דצמבר 2025'},
+  {id:'duration',title:'משך בנייה ממוצע',value:'37.8',unit:'חודשים',cat:'היצע',cc:'cat-s',chg:'+3.5 חו\'',dir:'down',
+   wm:'כמה חודשים מהתחלה עד גמר בנייה — מדד יעילות הצינור',
+   wi:'עלה מ-34.3 ב-2024. כל דירה לוקחת יותר זמן — הצינור מתארך ומסורבל.',
+   bl:'ככל שהבנייה מתארכת, ההיצע מגיע מאוחר יותר ובאי-ודאות גבוהה יותר.',
+   rel:'בנייה פעילה, גמרים, עלויות',src:'הלמ"ס — 19.3.2026'},
+];
+
+const DISTRICTS = [
+  {n:'ירושלים',new25:2555,new24:4170,old25:5401,old24:5223,p25:9344,p24:10352,chgN:-38.6,chgO:3.2},
+  {n:'צפון',new25:3612,new24:4810,old25:6687,old24:6448,p25:9282,p24:10842,chgN:-24.5,chgO:3.4},
+  {n:'חיפה',new25:3730,new24:5414,old25:9520,old24:10242,p25:7829,p24:8622,chgN:-30.9,chgO:-7.3},
+  {n:'מרכז',new25:9531,new24:11639,old25:12991,old24:13403,p25:20312,p24:16752,chgN:-17.6,chgO:-3.5},
+  {n:'תל אביב',new25:6205,new24:8779,old25:8681,old24:8609,p25:19126,p24:17455,chgN:-27.9,chgO:0.3},
+  {n:'דרום',new25:7897,new24:10682,old25:11446,old24:11324,p25:13372,p24:14281,chgN:-25.5,chgO:1.1},
+];
+
+const FUNNEL = [
+  {title:'היתרי בנייה',val:'81,230',note:'+2.2% — יציבות. 25% במחוז המרכז.',icon:'📋',c:'#534AB7',bg:'#EEEDFE',type:'',tag:''},
+  {title:'התחלות בנייה',val:'80,010',note:'+14.6% — שיא היסטורי. 92.8% דירות תוספתיות.',icon:'🏗️',c:'#1D9E75',bg:'#E1F5EE',type:'good',tag:'✅ שיא — הצינור מתמלא'},
+  {title:'בנייה פעילה',val:'207,200',note:'+10.9% — שיא מוחלט. כמחצית בת"א ומרכז.',icon:'🔨',c:'#185FA5',bg:'#E6F1FB',type:'good',tag:'✅ שיא מוחלט'},
+  {title:'גמר בנייה',val:'59,750',note:'+9.8% — התאוששות לאחר ירידה ב-2024.',icon:'🔑',c:'#1D9E75',bg:'#E1F5EE',type:''},
+  {title:'מלאי למכירה',val:'86,090',note:'29.2 חודשי היצע. מגמת עלייה מ-2022.',icon:'🏢',c:'#BA7517',bg:'#FAEEDA',type:'warn',tag:'⚠️ מלאי גבוה = לחץ על קבלנים'},
+  {title:'מכירות בפועל',val:'90,690',note:'-11.9% — ריכוך אחרי שיא 2024.',icon:'🏠',c:'#E24B4A',bg:'#FCEBEB',type:'warn',tag:'⚠️ ביקוש חלש תוך כדי היצע שיא'},
+];
+
+const INSIGHTS = [
+  {title:'היצע שיא, ביקוש חלש — הכוח עובר לקונה',
+   data:'207K בנייה פעילה, 86K מלאי, 29.2 חודשי היצע — מול 90,690 עסקאות. מאזן הכוח מתהפך.',
+   next:'האם הקבלנים יעצרו פרויקטים? האם מחירים יתגמשו? מה קורה לקצב הגמרים ב-2026?',
+   conf:'גבוהה',cc:'conf-h'},
+  {title:'קבלנים בלחץ — מכירות חדשות ירדו 25.5%',
+   data:'34,030 חדשות בלבד. כ-30% נמכרו בסבסוד ממשלתי. ללא סבסוד — הביקוש החופשי חלש עוד יותר.',
+   next:'האם מחירי חדשות יירדו? האם הטבות מימון ייצאו? מה קורה לקבלנים עם מלאי גבוה?',
+   conf:'גבוהה',cc:'conf-h'},
+  {title:'2025 — נורמליזציה או סימן אזהרה?',
+   data:'2024 הייתה חריגה (ריבאונד מ-2023). 2025 חזרה ל-90K — קרוב לממוצע ההיסטורי.',
+   next:'ריבית, שוק עבודה, ביקוש הגירה. האם 2026 תמשיך מטה או תתייצב?',
+   conf:'בינונית',cc:'conf-m'},
+  {title:'הצינור ממשיך לגדול — אבל מתארך',
+   data:'80,010 התחלות שיא, אבל משך בנייה עלה ל-37.8 חודש. הרבה היצע בדרך — אבל מגיע מאוחר.',
+   next:'כמה מ-207K הדירות יגיעו לשוק ב-2026? מה השפעת האיחורים על מחירים וקבלנים?',
+   conf:'גבוהה',cc:'conf-h'},
+];
+
+// ── RENDER ────────────────────────────────────────────────────
+let activeKPI = null;
+
+function renderKPIs() {
+  document.getElementById('kpi-grid').innerHTML = KPIs.map(k => `
+    <div class="kpi-card" id="kpi-${k.id}" onclick="toggleKPI('${k.id}')">
+      <div class="kpi-top">
+        <span class="kpi-cat ${k.cc}">${k.cat}</span>
+        <span class="kpi-chg ${k.dir}">${k.chg}</span>
+      </div>
+      <div class="kpi-label">${k.title}</div>
+      <div class="kpi-value">${k.value} <span class="kpi-unit">${k.unit||''}</span></div>
+      <div class="kpi-bottom">${k.bl}</div>
+      <div class="kpi-hint">לחץ לניתוח מעמיק ↓</div>
+    </div>
+  `).join('');
+}
+
+function toggleKPI(id) {
+  const panel = document.getElementById('detail-panel');
+  if (activeKPI === id) {
+    panel.classList.remove('open');
+    document.getElementById('kpi-'+id).classList.remove('open');
+    activeKPI = null;
+    return;
+  }
+  if (activeKPI) document.getElementById('kpi-'+activeKPI).classList.remove('open');
+  activeKPI = id;
+  const k = KPIs.find(x => x.id === id);
+  document.getElementById('kpi-'+id).classList.add('open');
+  panel.classList.add('open');
+  panel.innerHTML = `
+    <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:1rem">${k.title} — ${k.value} <span style="font-weight:400;font-size:14px;color:var(--text-2)">${k.unit||''}</span></div>
+    <div class="detail-grid">
+      <div><div class="dl">מה זה מודד</div><div class="dv">${k.wm}</div></div>
+      <div><div class="dl">למה זה חשוב</div><div class="dv">${k.wi}</div></div>
+      <div><div class="dl">נתונים קשורים</div><div class="dv">${k.rel}</div></div>
+      <div><div class="dl">מקור</div><div class="dv">${k.src}</div></div>
+    </div>
+    <div class="bl-box"><em>השורה התחתונה</em>${k.bl}</div>
+  `;
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function renderFunnel() {
+  document.getElementById('funnel-wrap').innerHTML = FUNNEL.map((f,i) => `
+    <div class="fstep ${f.type}">
+      <div class="ficon" style="background:${f.bg};color:${f.c}">${f.icon}</div>
+      <div class="fcontent">
+        <div class="ftitle" style="color:${f.c}">${f.title}</div>
+        <div class="fvalue" style="color:${f.c}">${f.val}</div>
+        <div class="fnote">${f.note}</div>
+        ${f.tag ? `<div class="ftag" style="color:${f.c}">${f.tag}</div>` : ''}
+      </div>
+      ${i < 5 ? '<div class="fchev">↓</div>' : ''}
+    </div>
+  `).join('');
+}
+
+function renderInsights() {
+  document.getElementById('insight-grid').innerHTML = INSIGHTS.map(ins => `
+    <div class="insight-card">
+      <div class="insight-header">
+        <div class="insight-title">${ins.title}</div>
+        <span class="conf-badge ${ins.cc}">ודאות ${ins.conf}</span>
+      </div>
+      <div class="insight-data">${ins.data}</div>
+      <div class="insight-next"><strong>מה לעקוב אחריו</strong>${ins.next}</div>
+    </div>
+  `).join('');
+}
+
+function renderDistricts() {
+  const maxP = Math.max(...DISTRICTS.map(d=>d.p25));
+  document.getElementById('district-grid').innerHTML = DISTRICTS.map(d => `
+    <div class="district-card">
+      <div class="district-name">${d.n}</div>
+      <div class="district-row">
+        <span>חדשות 2025</span>
+        <span style="color:${d.chgN<0?'var(--red)':'var(--green)'}">${d.new25.toLocaleString()} (${d.chgN>0?'+':''}${d.chgN}%)</span>
+      </div>
+      <div class="district-row">
+        <span>יד שנייה 2025</span>
+        <span style="color:${d.chgO<0?'var(--red)':'var(--green)'}">${d.old25.toLocaleString()} (${d.chgO>0?'+':''}${d.chgO}%)</span>
+      </div>
+      <div class="district-row">
+        <span>היתרים 2025</span>
+        <span>${d.p25.toLocaleString()}</span>
+      </div>
+      <div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.round(d.p25/maxP*100)}%"></div></div>
+    </div>
+  `).join('');
+}
+
+// ── NAV ───────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  document.getElementById('page-'+id).classList.add('active');
+  const map = {overview:0,pipeline:1,compare:2,districts:3,bottom:4};
+  const btn = document.querySelectorAll('.nav-btn')[map[id]];
+  btn.classList.add('active');
+  btn.setAttribute('aria-current','page');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+renderKPIs(); renderFunnel(); renderInsights(); renderDistricts();
+
+// ── CHARTS ────────────────────────────────────────────────────
+const gc = 'rgba(0,0,0,0.05)';
+const tc = '#888780';
+
+Chart.defaults.font.family = "'Heebo', sans-serif";
+
+new Chart(document.getElementById('salesChart'), {
+  type:'bar',
+  data:{labels:['2023','2024','2025'],datasets:[
+    {label:'סך הכל',data:[71405,103185,90690],backgroundColor:'#1D9E75',borderRadius:5},
+    {label:'חדשות',data:[27537,46094,34030],backgroundColor:'#185FA5',borderRadius:5},
+    {label:'יד שנייה',data:[44095,57091,56660],backgroundColor:'#9FE1CB',borderRadius:5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('pipeChart'), {
+  type:'bar',
+  data:{labels:['2022','2023','2024','2025'],datasets:[
+    {label:'היתרים',data:[79026,79518,79473,81230],backgroundColor:'#534AB7',borderRadius:5},
+    {label:'התחלות',data:[69637,64235,66784,80010],backgroundColor:'#1D9E75',borderRadius:5},
+    {label:'גמרים',data:[53273,60962,53733,59750],backgroundColor:'#185FA5',borderRadius:5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('purposeChart'), {
+  type:'doughnut',
+  data:{
+    labels:['מכירה חופשית','מכירה בסבסוד','בנייה עצמית','קומבינציה','השכרה','אחר'],
+    datasets:[{data:[54.5,15.7,14.1,6.7,4.8,4.2],backgroundColor:['#1D9E75','#9FE1CB','#534AB7','#185FA5','#BA7517','#888780'],borderWidth:2,borderColor:'white'}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:"'Heebo'",size:12},color:tc,boxWidth:12}}},cutout:'60%'}
+});
+
+new Chart(document.getElementById('durationChart'), {
+  type:'line',
+  data:{labels:['2020','2021','2022','2023','2024','2025'],datasets:[
+    {label:'ממוצע משוקלל',data:[30,31,33,34,34.3,37.8],borderColor:'#E24B4A',tension:0.3,pointRadius:5,pointBackgroundColor:'#E24B4A',fill:false},
+    {label:'ממוצע פשוט',data:[26,27,28,29,29.1,32.3],borderColor:'#BA7517',tension:0.3,borderDash:[6,3],pointRadius:5,pointBackgroundColor:'#BA7517',fill:false},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+' חו׳'},min:22}}}
+});
+
+new Chart(document.getElementById('compareChart'), {
+  type:'bar',
+  data:{
+    labels:['מכירות (K)','התחלות (K)','גמרים (K)','היתרים (K)','בנייה פעילה (÷4)'],
+    datasets:[
+      {label:'2023',data:[71.4,64.2,61.0,79.5,41.9],backgroundColor:'#AFA9EC',borderRadius:5},
+      {label:'2024',data:[103.2,66.8,53.7,79.5,46.8],backgroundColor:'#534AB7',borderRadius:5},
+      {label:'2025',data:[90.7,80.0,59.8,81.2,51.8],backgroundColor:'#1D9E75',borderRadius:5},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc}}}}
+});
+
+new Chart(document.getElementById('inventoryChart'), {
+  type:'line',
+  data:{
+    labels:['Q2 2022','Q4 2022','Q2 2023','Q4 2023','Q2 2024','Q4 2024','Q2 2025','Q4 2025','ינ׳ 2026'],
+    datasets:[
+      {label:'מלאי (K)',data:[50,58,65,71,76,80,84,86,86.3],borderColor:'#E24B4A',tension:0.3,pointRadius:4,pointBackgroundColor:'#E24B4A',fill:false,yAxisID:'y'},
+      {label:'חודשי היצע',data:[14,16,18,22,25,28,28,29,31.4],borderColor:'#BA7517',tension:0.3,borderDash:[6,3],pointRadius:4,pointBackgroundColor:'#BA7517',fill:false,yAxisID:'y2'},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{color:gc},ticks:{color:tc,maxRotation:40}},
+      y:{grid:{color:gc},ticks:{color:'#E24B4A',callback:v=>v+'K'},position:'right'},
+      y2:{grid:{display:false},ticks:{color:'#BA7517',callback:v=>v+' חו׳'},position:'left'},
+    }}
+});
+
+new Chart(document.getElementById('districtChart'), {
+  type:'bar',
+  data:{
+    labels:DISTRICTS.map(d=>d.n),
+    datasets:[
+      {label:'חדשות 2025',data:DISTRICTS.map(d=>d.new25),backgroundColor:'#1D9E75',borderRadius:4},
+      {label:'חדשות 2024',data:DISTRICTS.map(d=>d.new24),backgroundColor:'#9FE1CB',borderRadius:4},
+      {label:'יד שנייה 2025',data:DISTRICTS.map(d=>d.old25),backgroundColor:'#185FA5',borderRadius:4},
+      {label:'יד שנייה 2024',data:DISTRICTS.map(d=>d.old24),backgroundColor:'#B5D4F4',borderRadius:4},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('permitsChart'), {
+  type:'bar',
+  data:{
+    labels:DISTRICTS.map(d=>d.n),
+    datasets:[
+      {label:'2025',data:DISTRICTS.map(d=>d.p25),backgroundColor:'#534AB7',borderRadius:4},
+      {label:'2024',data:DISTRICTS.map(d=>d.p24),backgroundColor:'#AFA9EC',borderRadius:4},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('radarChart'), {
+  type:'radar',
+  data:{
+    labels:['ביקוש\nמכירות','היצע\nגמרים','צינור\nבנייה','היתרים','מלאי\n(הפוך)','התחלות'],
+    datasets:[
+      {label:'2025',data:[70,82,95,80,40,95],backgroundColor:'rgba(29,158,117,0.15)',borderColor:'#1D9E75',pointBackgroundColor:'#1D9E75',pointRadius:5},
+      {label:'2024',data:[90,65,88,78,60,75],backgroundColor:'rgba(83,74,183,0.1)',borderColor:'#534AB7',pointBackgroundColor:'#534AB7',pointRadius:5},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{r:{grid:{color:gc},ticks:{display:false},pointLabels:{color:tc,font:{size:12,family:"'Heebo'"}},min:0,max:100}}}
+});
+</script>
+</body>
+</html>
