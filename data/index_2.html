@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדד נדל"ן ישראל — נתוני שוק 2026</title>
+<meta name="description" content="נתוני שוק הנדל"ן הישראלי לציבור, למשקיעים ולמקבלי החלטות — מבוסס נתוני הלמ"ס">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--green-light:#E1F5EE;--green-mid:#9FE1CB;--green-dark:#0F6E56;--green-deep:#085041;
+  --blue:#185FA5;--blue-light:#E6F1FB;--blue-mid:#B5D4F4;
+  --purple:#534AB7;--purple-light:#EEEDFE;--purple-mid:#AFA9EC;
+  --amber:#BA7517;--amber-light:#FAEEDA;--amber-mid:#FAC775;
+  --red:#E24B4A;--red-light:#FCEBEB;
+  --gray-50:#F8F9FA;--gray-100:#F1EFE8;--gray-200:#D3D1C7;--gray-400:#888780;--gray-900:#2C2C2A;
+  --text:#1a1a18;--text-2:#5a5a58;--text-3:#9a9a98;
+  --border:rgba(0,0,0,0.09);--radius:12px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:#F8F9FA;color:var(--text);direction:rtl;min-height:100vh}
+.site-header{background:white;border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:1rem 0 0.75rem}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:40px;height:40px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;flex-shrink:0}
+.logo-text{font-size:20px;font-weight:600;color:var(--text)}
+.logo-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.header-badge{background:var(--green-light);color:var(--green-dark);font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;border:0.5px solid var(--green-mid);white-space:nowrap}
+.nav{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:10px 16px;font-size:13px;font-family:'Heebo',sans-serif;border:none;background:transparent;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.15s}
+.nav-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:500}
+.nav-btn:hover:not(.active){color:var(--text)}
+.page{display:none}
+.page.active{display:block}
+.container{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+.page-hero{margin-bottom:2rem}
+.page-title{font-size:24px;font-weight:600;color:var(--text);margin-bottom:6px}
+.page-desc{font-size:14px;color:var(--text-2);line-height:1.6;max-width:700px}
+.alert{border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;gap:12px}
+.alert-amber{background:var(--amber-light);border:0.5px solid var(--amber-mid)}
+.alert-red{background:var(--red-light);border:0.5px solid #F7C1C1}
+.alert-green{background:var(--green-light);border:0.5px solid var(--green-mid)}
+.alert-icon{font-size:20px;flex-shrink:0;line-height:1.2}
+.alert-body strong{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.alert-body p{font-size:13px;line-height:1.6}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px;margin-bottom:1.5rem}
+.kpi{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.kpi:hover{border-color:var(--green);box-shadow:0 4px 12px rgba(29,158,117,0.08)}
+.kpi.open{border-color:var(--green);box-shadow:0 4px 12px rgba(29,158,117,0.12)}
+.kpi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.kpi-cat{font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;letter-spacing:0.03em}
+.cat-d{background:var(--green-light);color:var(--green-dark)}
+.cat-s{background:var(--blue-light);color:var(--blue)}
+.cat-f{background:var(--purple-light);color:var(--purple)}
+.cat-w{background:#FAECE7;color:#993C1D}
+.cat-p{background:var(--amber-light);color:var(--amber)}
+.up{color:var(--green);font-size:13px;font-weight:600}
+.down{color:var(--red);font-size:13px;font-weight:600}
+.neu{color:var(--text-3);font-size:13px;font-weight:600}
+.kpi-label{font-size:12px;color:var(--text-2);margin-bottom:4px}
+.kpi-value{font-size:26px;font-weight:600;color:var(--text);line-height:1.1}
+.kpi-unit{font-size:13px;font-weight:400;color:var(--text-2)}
+.kpi-bl{font-size:12px;color:var(--green-dark);margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);line-height:1.5}
+.kpi-hint{font-size:11px;color:var(--text-3);margin-top:4px}
+.detail-panel{background:var(--gray-50);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:none;animation:fadeIn 0.2s ease}
+.detail-panel.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.dl{font-size:11px;color:var(--text-2);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.dv{font-size:13px;color:var(--text);line-height:1.6}
+.bl-box{background:var(--green-deep);color:white;border-radius:var(--radius-sm);padding:14px 18px;font-size:14px;line-height:1.6}
+.bl-box em{display:block;font-size:11px;opacity:0.6;margin-bottom:4px;font-style:normal;letter-spacing:0.05em}
+.chart-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.chart-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.chart-sub{font-size:12px;color:var(--text-2);margin-bottom:1.25rem}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1rem}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.funnel{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.fstep{display:flex;align-items:center;gap:14px;padding:14px 18px;background:white;border:0.5px solid var(--border);border-radius:var(--radius-sm)}
+.fstep.warn{border-color:var(--red);background:var(--red-light)}
+.fstep.good{border-color:var(--green);background:var(--green-light)}
+.ficon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fcontent{flex:1}
+.ftitle{font-size:13px;font-weight:600}
+.fvalue{font-size:22px;font-weight:600;margin-top:2px}
+.fnote{font-size:12px;color:var(--text-2);margin-top:2px}
+.ftag{font-size:11px;margin-top:4px;font-weight:500}
+.year-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.district-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:1.5rem}
+.district-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem}
+.district-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px}
+.district-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);padding:4px 0;border-bottom:0.5px solid var(--border)}
+.district-row:last-of-type{border:none}
+.district-row span:last-child{font-weight:500;color:var(--text)}
+.mini-bar{height:4px;background:var(--gray-100);border-radius:2px;margin-top:8px}
+.mini-bar-fill{height:4px;border-radius:2px}
+.insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:1.5rem}
+.insight-card{background:white;border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.insight-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.insight-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.conf-badge{font-size:10px;padding:3px 9px;border-radius:8px;white-space:nowrap;flex-shrink:0;font-weight:600}
+.conf-h{background:#EAF3DE;color:#3B6D11}
+.conf-m{background:var(--amber-light);color:#854F0B}
+.insight-data{font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6}
+.insight-next{font-size:12px;color:var(--text);padding:10px 12px;background:var(--gray-50);border-radius:var(--radius-sm);line-height:1.5;border-right:3px solid var(--green)}
+.insight-next strong{display:block;font-size:10px;color:var(--green-dark);margin-bottom:3px;font-weight:600;letter-spacing:0.04em}
+/* PRICE PAGE SPECIFIC */
+.price-headline{background:var(--red-light);border:0.5px solid #F7C1C1;border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.price-stat{text-align:center}
+.price-stat-val{font-size:28px;font-weight:600;color:var(--red)}
+.price-stat-label{font-size:11px;color:var(--text-2);margin-top:2px}
+.price-divider{width:1px;height:50px;background:var(--border);flex-shrink:0}
+.price-note{font-size:13px;color:#501313;line-height:1.6;flex:1}
+.district-price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:1.5rem}
+.dpcard{background:white;border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem}
+.dpcard-name{font-size:12px;color:var(--text-2);margin-bottom:6px}
+.dpcard-price{font-size:20px;font-weight:600;color:var(--text)}
+.dpcard-unit{font-size:11px;color:var(--text-3)}
+.dpcard-chg{font-size:12px;font-weight:500;margin-top:4px}
+.dpcard-bar{height:3px;border-radius:2px;margin-top:8px;background:var(--gray-100)}
+.dpcard-bar-fill{height:3px;border-radius:2px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.site-footer{background:white;border-top:0.5px solid var(--border);padding:1.5rem;text-align:center;margin-top:2rem}
+.site-footer p{font-size:12px;color:var(--text-3)}
+.site-footer a{color:var(--green);text-decoration:none}
+@media(max-width:640px){
+  .detail-grid,.year-cards,.two-col{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .header-badge{display:none}
+  .price-headline{flex-direction:column;gap:1rem}
+  .price-divider{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">🏗️</div>
+        <div>
+          <div class="logo-text">מדד נדל"ן ישראל</div>
+          <div class="logo-sub">נתוני הלמ"ס — לבני אדם</div>
+        </div>
+      </div>
+      <div class="header-badge">🔄 עדכון אוגוסט 2026</div>
+    </div>
+    <nav class="nav" role="navigation" aria-label="ניווט ראשי">
+      <button class="nav-btn active" onclick="showPage('overview')">📊 סקירת שוק</button>
+      <button class="nav-btn" onclick="showPage('pipeline')">🔧 צינור הדיור</button>
+      <button class="nav-btn" onclick="showPage('prices')">💰 מחירים 2026</button>
+      <button class="nav-btn" onclick="showPage('compare')">📅 2023–2026</button>
+      <button class="nav-btn" onclick="showPage('districts')">🗺️ מחוזות</button>
+      <button class="nav-btn" onclick="showPage('bottom')">💡 שורה תחתונה</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== OVERVIEW ===== -->
+<div id="page-overview" class="page active">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">סקירת שוק — עדכון אוגוסט 2026</div>
+    <div class="page-desc">נתוני ביקוש והיצע מסיכום 2025, ונתוני מחירים עדכניים עד מאי 2026 מירחון המחירים של הלמ"ס. לחץ על כרטיס לניתוח מעמיק.</div>
+  </div>
+
+  <div class="alert alert-red">
+    <div class="alert-icon">🔻</div>
+    <div class="alert-body">
+      <strong style="color:#A32D2D">חדש: מדד מחירי הדירות יורד — לראשונה מזה שנים</strong>
+      <p style="color:#501313">אפריל–מאי 2026: מדד מחירי דירות ירד ל-593 נקודות, שינוי שנתי של <strong>-2%</strong>. מדד דירות חדשות: -3.9% שנתי. זה הנתון שמאשר את הסיפור של 2025 — היצע שיא פוגש ביקוש מתמתן.</p>
+    </div>
+  </div>
+
+  <div class="kpi-grid" id="kpi-grid"></div>
+  <div id="detail-panel" class="detail-panel"></div>
+
+  <div class="chart-card">
+    <div class="chart-title">מדד מחירי דירות — 2023 עד מאי 2026</div>
+    <div class="chart-sub">ציר זמן דו-חודשי. עלייה עד שיא פברואר 2025 (609.8), ירידה מתמשכת מאז.</div>
+    <div style="position:relative;height:260px"><canvas id="priceIndexChart"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">מכירות דירות — 2023–2025</div>
+    <div class="chart-sub">סך הכל / חדשות / יד שנייה לפי שנה</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>סך הכל</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>דירות חדשות</span>
+      <span class="li"><span class="ld" style="background:#9FE1CB"></span>יד שנייה</span>
+    </div>
+    <div style="position:relative;height:240px"><canvas id="salesChart"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PIPELINE ===== -->
+<div id="page-pipeline" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">צינור הדיור — 2025</div>
+    <div class="page-desc">המסע של דירה — מהיתר עד מפתח בדלת. 2025 מציגה פרדוקס: היצע שיא, ביקוש מתמתן.</div>
+  </div>
+  <div class="funnel" id="funnel-wrap"></div>
+  <div class="chart-card">
+    <div class="chart-title">צינור הבנייה — 2022–2025</div>
+    <div class="chart-sub">היתרים / התחלות / גמרים לפי שנה</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#534AB7"></span>היתרים</span>
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>התחלות</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>גמרים</span>
+    </div>
+    <div style="position:relative;height:260px"><canvas id="pipeChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">משך בנייה ממוצע — מגמה 2020–2025</div>
+    <div class="chart-sub">חודשים עד גמר בנייה. הצינור מתארך — מ-30 חודש ב-2020 ל-37.8 ב-2025.</div>
+    <div style="position:relative;height:220px"><canvas id="durationChart"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PRICES 2026 ===== -->
+<div id="page-prices" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">מחירים — נתונים חדשים עד מאי 2026</div>
+    <div class="page-desc">ירחון המחירים של הלמ"ס — מדדים, מחירים ממוצעים לפי מחוז וסוג דירה. נתונים שלא היו באתר עד עכשיו.</div>
+  </div>
+
+  <div class="price-headline">
+    <div class="price-stat">
+      <div class="price-stat-val">-2%</div>
+      <div class="price-stat-label">שינוי שנתי<br>מדד כללי מאי 2026</div>
+    </div>
+    <div class="price-divider"></div>
+    <div class="price-stat">
+      <div class="price-stat-val">-3.9%</div>
+      <div class="price-stat-label">שינוי שנתי<br>דירות חדשות מאי 2026</div>
+    </div>
+    <div class="price-divider"></div>
+    <div class="price-stat">
+      <div class="price-stat-val">593</div>
+      <div class="price-stat-label">מדד מחירים<br>בסיס: אוקטובר-נובמבר 2017=414.5</div>
+    </div>
+    <div class="price-divider"></div>
+    <div class="price-note">
+      <strong style="display:block;margin-bottom:4px;color:#501313">מה זה אומר?</strong>
+      מדד המחירים ירד 4 חודשים ברצף (פברואר–מאי 2026). השיא היה פברואר 2025 — 609.8 נקודות. מאז ירד ב-2.7%.
+      ירידה ריאלית, לא רק האטה בעלייה. זה קורה כשהיצע (207K בנייה פעילה) פוגש ביקוש שנחלש.
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">מדד מחירי דירות לפי מחוז — מאי 2026</div>
+    <div class="chart-sub">מחוז הצפון הכי יקר (662.8), תל אביב בירידה חדה (-2.3% בחודש האחרון)</div>
+    <div style="position:relative;height:280px"><canvas id="districtIndexChart"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">מגמת מדד מחוזות — 2025 עד מאי 2026</div>
+    <div class="chart-sub">כל מחוז מספר סיפור שונה. ירושלים וצפון — יציבות יחסית. תל אביב — ירידה חדה.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#E24B4A"></span>תל אביב</span>
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>מרכז</span>
+      <span class="li"><span class="ld" style="background:#534AB7"></span>ירושלים</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>צפון</span>
+      <span class="li"><span class="ld" style="background:#BA7517"></span>חיפה</span>
+      <span class="li"><span class="ld" style="background:#888780"></span>דרום</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="districtTrendChart"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">מחירים ממוצעים לפי מחוז — Q1 2026 מול 2025</div>
+    <div class="chart-sub">אלפי ₪ לעסקה. 13,044 עסקאות ב-Q1 2026 / מחיר ממוצע ארצי: 2,333 אלפי ₪</div>
+    <div style="position:relative;height:280px"><canvas id="avgPriceChart"></canvas></div>
+  </div>
+
+  <div style="margin-bottom:1rem;font-size:14px;font-weight:600;color:var(--text)">מחירים ממוצעים לפי מחוז — Q1 2026</div>
+  <div class="district-price-grid" id="district-price-grid"></div>
+
+  <div class="two-col">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-title">מדד דירות חדשות בלבד — 2024–2026</div>
+      <div class="chart-sub">ירידה שנתית של -3.9% במאי 2026. 37.5% מהעסקאות בסבסוד ממשלתי.</div>
+      <div style="position:relative;height:220px"><canvas id="newPriceChart"></canvas></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-title">מחירים ממוצעים לפי גודל דירה — Q1 2026</div>
+      <div class="chart-sub">ארצי. אלפי ₪ לפי מספר חדרים.</div>
+      <div style="position:relative;height:220px"><canvas id="roomsChart"></canvas></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== COMPARE ===== -->
+<div id="page-compare" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">השוואה 2023–2026</div>
+    <div class="page-desc">ארבע שנים שמספרות ארבעה סיפורים שונים על אותו שוק.</div>
+  </div>
+  <div class="year-cards">
+    <div style="background:var(--red-light);border-radius:var(--radius);padding:1.25rem;border:0.5px solid #F7C1C1">
+      <div style="font-size:11px;color:#A32D2D;font-weight:600;margin-bottom:8px">2023 — קיפאון</div>
+      <div style="font-size:13px;color:#501313;line-height:2">71,405 עסקאות 📉<br>ריבית גבוהה<br>מלאי מצטבר<br>מחירים יורדים</div>
+    </div>
+    <div style="background:var(--green-light);border-radius:var(--radius);padding:1.25rem;border:0.5px solid var(--green-mid)">
+      <div style="font-size:11px;color:var(--green-dark);font-weight:600;margin-bottom:8px">2024 — ריבאונד</div>
+      <div style="font-size:13px;color:var(--green-deep);line-height:2">103,185 עסקאות 🚀<br>+67% מ-2023<br>מחירים עולים<br>גמרים ירדו</div>
+    </div>
+    <div style="background:var(--amber-light);border-radius:var(--radius);padding:1.25rem;border:0.5px solid var(--amber-mid)">
+      <div style="font-size:11px;color:#854F0B;font-weight:600;margin-bottom:8px">2025 — פיצול</div>
+      <div style="font-size:13px;color:#412402;line-height:2">90,690 עסקאות ↘<br>היצע שיא<br>מחירים מתייצבים<br>מלאי גדל</div>
+    </div>
+  </div>
+  <div class="alert alert-red">
+    <div class="alert-icon">🆕</div>
+    <div class="alert-body">
+      <strong style="color:#A32D2D">2026 Q1–Q2 — ירידת מחירים</strong>
+      <p style="color:#501313">מדד מחירי דירות: -2% שנתי במאי 2026. תל אביב: -2.3% בחודש אחד בלבד (אפריל–מאי). מחירים ממוצעים ב-Q1 2026: 2,333 אלפי ₪ — יציב לעומת 2025, אך עם פערים גדולים בין מחוזות.</p>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">מדד מחירי דירות — מסלול מלא 2022–2026</div>
+    <div class="chart-sub">שיא: פברואר 2025 (609.8). נכון למאי 2026: 593. ירידה של 2.7% מהשיא.</div>
+    <div style="position:relative;height:280px"><canvas id="fullIndexChart"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">השוואת מדדי מפתח — 2023 / 2024 / 2025</div>
+    <div class="chart-sub">כל עמודה = אלפי דירות. בנייה פעילה חולקה ב-4 לצרכי קנה מידה.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#AFA9EC"></span>2023</span>
+      <span class="li"><span class="ld" style="background:#534AB7"></span>2024</span>
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>2025</span>
+    </div>
+    <div style="position:relative;height:280px"><canvas id="compareChart"></canvas></div>
+  </div>
+</div>
+</div>
+
+<!-- ===== DISTRICTS ===== -->
+<div id="page-districts" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">נתוני מחוזות — 2025</div>
+    <div class="page-desc">שוק הנדל"ן הישראלי הוא לא שוק אחד — כל מחוז מספר סיפור שונה.</div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">מכירות לפי מחוז — 2025 מול 2024</div>
+    <div class="chart-sub">כל המחוזות ירדו בדירות חדשות. מגמה מעורבת ביד שנייה.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>חדשות 2025</span>
+      <span class="li"><span class="ld" style="background:#9FE1CB"></span>חדשות 2024</span>
+      <span class="li"><span class="ld" style="background:#185FA5"></span>יד שנייה 2025</span>
+      <span class="li"><span class="ld" style="background:#B5D4F4"></span>יד שנייה 2024</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="districtChart"></canvas></div>
+  </div>
+  <div class="district-grid" id="district-grid"></div>
+</div>
+</div>
+
+<!-- ===== BOTTOM LINE ===== -->
+<div id="page-bottom" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="page-title">שורה תחתונה — אוגוסט 2026</div>
+    <div class="page-desc">תובנות מבוססות נתוני הלמ"ס — ביקוש, היצע, מחירים וכוח קנייה. לא תחזית, אלא ניתוח.</div>
+  </div>
+  <div class="insight-grid" id="insight-grid"></div>
+  <div class="chart-card">
+    <div class="chart-title">מאזן שוק — 2025 לעומת 2024</div>
+    <div class="chart-sub">6 מדדים מנורמלזים ל-100. ירוק = 2025, סגול = 2024.</div>
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:#1D9E75"></span>2025</span>
+      <span class="li"><span class="ld" style="background:#534AB7"></span>2024</span>
+    </div>
+    <div style="position:relative;height:300px"><canvas id="radarChart"></canvas></div>
+  </div>
+  <div class="chart-card" style="background:var(--green-deep);border-color:var(--green-dark)">
+    <div style="color:rgba(255,255,255,0.6);font-size:11px;font-weight:600;letter-spacing:0.05em;margin-bottom:8px">מסקנה מרכזית — אוגוסט 2026</div>
+    <div style="color:white;font-size:16px;font-weight:600;line-height:1.6;margin-bottom:12px">שוק 2026 הוא שוק של ירידת מחירים — לראשונה מאז 2023.</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:13px;line-height:1.7">מדד מחירי דירות: -2% שנתי. מדד דירות חדשות: -3.9% שנתי. 207,200 דירות בצינור.
+    86,090 מלאי. 80,010 התחלות שיא — כל אלה לוחצים על המחיר מלמעלה.
+    מי שמחכה לקנות — הנתונים עובדים לטובתו. מי שמחזיק למכירה — הלחץ גובר.</div>
+  </div>
+</div>
+</div>
+
+</main>
+<footer class="site-footer">
+  <p>מבוסס נתוני <a href="https://www.cbs.gov.il" target="_blank" rel="noopener">הלמ"ס — הלשכה המרכזית לסטטיסטיקה</a> | עדכון: אוגוסט 2026 | ירחון מחירים 5/2026 + סיכום 2025</p>
+  <p style="margin-top:4px">האתר מיועד למטרות מידע בלבד ואינו מהווה ייעוץ השקעות</p>
+</footer>
+
+<script>
+// ── DATA ─────────────────────────────────────────
+const KPIs = [
+  {id:'sales',title:'דירות שנמכרו 2025',value:'90,690',cat:'ביקוש',cc:'cat-d',chg:'-11.9%',dir:'down',
+   wm:'קצב ספיגת השוק — כמה דירות עוברות ידיים בפועל',
+   wi:'ירידה מהשיא של 2024, אבל 26.9% מעל 2023. ריכוך, לא קריסה.',
+   bl:'קצב העסקאות הוא מדד הספיגה של השוק. 2025 חזרה לרמה נורמלית אחרי שיא 2024.',
+   rel:'ריבית, מלאי, מדד מחירים',src:'הלמ"ס — סיכום שנת 2025'},
+  {id:'priceidx',title:'מדד מחירי דירות',value:'593',unit:'נקודות',cat:'מחיר',cc:'cat-p',chg:'-2% שנתי',dir:'down',
+   wm:'שינוי מחירי הדירות — חדשות ויד שנייה. בסיס: אוק\'–נוב\' 2017=414.5',
+   wi:'שיא: פבר׳ 2025 — 609.8. נכון למאי 2026: 593. ירידה של 2.7% מהשיא תוך 15 חודש.',
+   bl:'מדד המחירים יורד לראשונה מאז 2023. שינוי שנתי -2%. זה לא האטה בעלייה — זו ירידה.',
+   rel:'מדד חדשות, מלאי, חודשי היצע, ריבית',src:'הלמ"ס — ירחון מחירים 5/2026'},
+  {id:'newprice',title:'מדד דירות חדשות',value:'535.4',unit:'נקודות',cat:'מחיר',cc:'cat-p',chg:'-3.9% שנתי',dir:'down',
+   wm:'שינוי מחירי דירות חדשות בלבד — מנוכה איכות',
+   wi:'37.5% מהעסקאות בסבסוד ממשלתי. ירידה שנתית עקבית: -3.9% במאי 2026.',
+   bl:'מחירי הדירות החדשות יורדים בקצב מהיר יותר מיד שנייה. קבלנים בלחץ.',
+   rel:'מלאי חדשות, חודשי היצע, סבסוד',src:'הלמ"ס — ירחון מחירים 5/2026'},
+  {id:'avgprice',title:'מחיר ממוצע Q1 2026',value:'2,333',unit:'אלפי ₪',cat:'מחיר',cc:'cat-p',chg:'יציב',dir:'neu',
+   wm:'מחיר ממוצע לעסקה ארצי בינואר–מרץ 2026 (13,044 עסקאות)',
+   wi:'יציב לעומת ממוצע 2025 (2,331). אבל פערים גדולים: ת"א 3,406 vs צפון 1,506.',
+   bl:'המחיר הממוצע מסתיר את הפערים. השוק הוא אוסף שווקים מקומיים, לא שוק אחד.',
+   rel:'מדד מחירים, מחוזות, מספר חדרים',src:'הלמ"ס — ירחון מחירים 4/2026'},
+  {id:'starts',title:'התחלות בנייה 2025',value:'80,010',cat:'תכנון עתידי',cc:'cat-f',chg:'+14.6%',dir:'up',
+   wm:'שלב כניסת פרויקט לביצוע בפועל',
+   wi:'שיא היסטורי. הקבלנים ממשיכים לבנות למרות ביקוש חלש — לחץ עתידי על מחירים.',
+   bl:'התחלות הן הצינור שמזרים את ההיצע העתידי. 80,010 התחלות של 2025 = גמרים של 2027-28.',
+   rel:'גמר בנייה, בנייה פעילה, מדד מחירים',src:'הלמ"ס — 19.3.2026'},
+  {id:'active',title:'דירות בבנייה פעילה',value:'207,200',cat:'היצע',cc:'cat-s',chg:'+10.9%',dir:'up',
+   wm:'כלל הדירות הנמצאות בדרך לשוק כרגע',
+   wi:'שיא מוחלט. 207,200 דירות בצינור + ירידת מחירים = לחץ שיגבר עם הגמרים.',
+   bl:'בנייה פעילה גבוהה היא ההיצע שמחכה להפוך למציאות — ומתחיל להשפיע על מחירים.',
+   rel:'גמרים, מדד מחירים, מלאי',src:'הלמ"ס — סוף Q3 2025'},
+  {id:'inventory',title:'מלאי חדשות למכירה',value:'86,090',cat:'היצע',cc:'cat-s',chg:'29.2 חודשים',dir:'down',
+   wm:'כמה דירות חדשות ממתינות לקונה',
+   wi:'29.2 חודשי היצע. 30.8% בתל אביב. מגמת עלייה מ-2022 — לחץ ישיר על מחירי חדשות.',
+   bl:'מלאי גבוה + ירידת מחירים = מאזן הכוח הופך לטובת הקונה. הנתון מאשר את המדד.',
+   rel:'מדד מחירי חדשות, מכירות חדשות',src:'הלמ"ס — דצמבר 2025'},
+  {id:'tlaviv',title:'מדד ת"א — מאי 2026',value:'562.8',unit:'נקודות',cat:'מחיר',cc:'cat-p',chg:'-2.3% חודשי',dir:'down',
+   wm:'מדד מחירי דירות מחוז תל אביב — החד ביותר בין המחוזות',
+   wi:'ירידה של 2.3% בחודש אחד. מנובמבר 2024 (576.5) ועד מאי 2026 (562.8) — ירידה של 2.4%.',
+   bl:'תל אביב מוביל את הירידה. מלאי עצום (30.8% מהמלאי הארצי) + ביקוש חלש = לחץ חזק.',
+   rel:'מדד ארצי, מלאי ת"א, מכירות ת"א',src:'הלמ"ס — ירחון מחירים 5/2026'},
+];
+
+const DISTRICTS = [
+  {n:'ירושלים',new25:2555,new24:4170,old25:5401,old24:5223,p25:9344,p24:10352,chgN:-38.6,chgO:3.2},
+  {n:'צפון',new25:3612,new24:4810,old25:6687,old24:6448,p25:9282,p24:10842,chgN:-24.5,chgO:3.4},
+  {n:'חיפה',new25:3730,new24:5414,old25:9520,old24:10242,p25:7829,p24:8622,chgN:-30.9,chgO:-7.3},
+  {n:'מרכז',new25:9531,new24:11639,old25:12991,old24:13403,p25:20312,p24:16752,chgN:-17.6,chgO:-3.5},
+  {n:'תל אביב',new25:6205,new24:8779,old25:8681,old24:8609,p25:19126,p24:17455,chgN:-27.9,chgO:0.3},
+  {n:'דרום',new25:7897,new24:10682,old25:11446,old24:11324,p25:13372,p24:14281,chgN:-25.5,chgO:1.1},
+];
+
+// מחירים ממוצעים Q1 2026 לפי מחוז (אלפי ₪)
+const DISTRICT_PRICES = [
+  {n:'ירושלים',p26:2942,p25:2970,chg:-1.0},
+  {n:'צפון',p26:1506,p25:1539,chg:-2.1},
+  {n:'חיפה',p26:1887,p25:1829,chg:3.2},
+  {n:'מרכז',p26:2747,p25:2713,chg:1.3},
+  {n:'תל אביב',p26:3406,p25:3355,chg:1.5},
+  {n:'דרום',p26:1581,p25:1560,chg:1.3},
+];
+
+const FUNNEL = [
+  {title:'היתרי בנייה',val:'81,230',note:'+2.2% — יציבות',icon:'📋',c:'#534AB7',bg:'#EEEDFE',type:''},
+  {title:'התחלות בנייה',val:'80,010',note:'+14.6% — שיא היסטורי',icon:'🏗️',c:'#1D9E75',bg:'#E1F5EE',type:'good',tag:'✅ שיא — הצינור מתמלא'},
+  {title:'בנייה פעילה',val:'207,200',note:'+10.9% — שיא מוחלט',icon:'🔨',c:'#185FA5',bg:'#E6F1FB',type:'good',tag:'✅ שיא מוחלט'},
+  {title:'גמר בנייה',val:'59,750',note:'+9.8% — התאוששות',icon:'🔑',c:'#1D9E75',bg:'#E1F5EE',type:''},
+  {title:'מלאי למכירה',val:'86,090',note:'29.2 חודשי היצע — לחץ על מחירים',icon:'🏢',c:'#BA7517',bg:'#FAEEDA',type:'warn',tag:'⚠️ מלאי גבוה = לחץ על קבלנים'},
+  {title:'מכירות בפועל',val:'90,690',note:'-11.9% — ביקוש נחלש',icon:'🏠',c:'#E24B4A',bg:'#FCEBEB',type:'warn',tag:'⚠️ ביקוש חלש + מחירים יורדים'},
+];
+
+const INSIGHTS = [
+  {title:'מדד מחירי הדירות יורד לראשונה מאז 2023',
+   data:'אפריל–מאי 2026: -1% חודשי. שינוי שנתי: -2%. שיא פברואר 2025 (609.8) → 593 נכון למאי 2026. ירידה של 2.7% בתוך 15 חודש.',
+   next:'האם הירידה תאיץ עם הגמרים של 80K התחלות 2025? מה קורה לביטולי העסקאות (41% ב-2026)?',
+   conf:'גבוהה',cc:'conf-h'},
+  {title:'תל אביב — מרכז הכאב',
+   data:'מדד ת"א: -2.3% בחודש אחד (אפריל–מאי 2026). 562.8 נקודות. 30.8% מהמלאי הארצי נמצא בת"א.',
+   next:'מה קורה למחירי שכירות בת"א? האם מלאי יורד עם ירידת מחירים, או ממשיך לגדול?',
+   conf:'גבוהה',cc:'conf-h'},
+  {title:'הצינור לוחץ — 207K דירות בדרך',
+   data:'207,200 דירות בבנייה פעילה. 80,010 התחלות 2025 = גמרים של 2027-28. הלחץ על מחירים יגבר.',
+   next:'כמה גמרים צפויים ב-2026? האם קבלנים יקטינו התחלות בתגובה לירידת מחירים?',
+   conf:'גבוהה',cc:'conf-h'},
+  {title:'2026 — שנת מעבר לשוק קונים?',
+   data:'ירידת מחירים + מלאי שיא + ביטולי עסקאות +41% + 29.2 חודשי היצע = כוח לקונה.',
+   next:'האם הריבית תרד ותאזן? האם ביקוש הגירה יחזור? מה תעשה הממשלה?',
+   conf:'בינונית',cc:'conf-m'},
+];
+
+// ── RENDER ───────────────────────────────────────
+let activeKPI = null;
+
+function renderKPIs() {
+  document.getElementById('kpi-grid').innerHTML = KPIs.map(k => `
+    <div class="kpi" id="kpi-${k.id}" onclick="toggleKPI('${k.id}')">
+      <div class="kpi-top"><span class="kpi-cat ${k.cc}">${k.cat}</span><span class="${k.dir}">${k.chg}</span></div>
+      <div class="kpi-label">${k.title}</div>
+      <div class="kpi-value">${k.value} <span class="kpi-unit">${k.unit||''}</span></div>
+      <div class="kpi-bl">${k.bl}</div>
+      <div class="kpi-hint">לחץ לניתוח מעמיק ↓</div>
+    </div>`).join('');
+}
+
+function toggleKPI(id) {
+  const panel = document.getElementById('detail-panel');
+  if (activeKPI === id) { panel.classList.remove('open'); document.getElementById('kpi-'+id).classList.remove('open'); activeKPI=null; return; }
+  if (activeKPI) document.getElementById('kpi-'+activeKPI).classList.remove('open');
+  activeKPI = id;
+  const k = KPIs.find(x=>x.id===id);
+  document.getElementById('kpi-'+id).classList.add('open');
+  panel.classList.add('open');
+  panel.innerHTML = `
+    <div style="font-size:16px;font-weight:600;margin-bottom:1rem">${k.title} — ${k.value} <span style="font-weight:400;font-size:14px;color:var(--text-2)">${k.unit||''}</span></div>
+    <div class="detail-grid">
+      <div><div class="dl">מה זה מודד</div><div class="dv">${k.wm}</div></div>
+      <div><div class="dl">למה זה חשוב</div><div class="dv">${k.wi}</div></div>
+      <div><div class="dl">נתונים קשורים</div><div class="dv">${k.rel}</div></div>
+      <div><div class="dl">מקור</div><div class="dv">${k.src}</div></div>
+    </div>
+    <div class="bl-box"><em>השורה התחתונה</em>${k.bl}</div>`;
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function renderFunnel() {
+  document.getElementById('funnel-wrap').innerHTML = FUNNEL.map((f,i) => `
+    <div class="fstep ${f.type}">
+      <div class="ficon" style="background:${f.bg}">${f.icon}</div>
+      <div class="fcontent">
+        <div class="ftitle" style="color:${f.c}">${f.title}</div>
+        <div class="fvalue" style="color:${f.c}">${f.val}</div>
+        <div class="fnote">${f.note}</div>
+        ${f.tag?`<div class="ftag" style="color:${f.c}">${f.tag}</div>`:''}
+      </div>
+      ${i<5?'<div style="color:var(--text-3);font-size:18px">↓</div>':''}
+    </div>`).join('');
+}
+
+function renderInsights() {
+  document.getElementById('insight-grid').innerHTML = INSIGHTS.map(ins => `
+    <div class="insight-card">
+      <div class="insight-header"><div class="insight-title">${ins.title}</div><span class="conf-badge ${ins.cc}">ודאות ${ins.conf}</span></div>
+      <div class="insight-data">${ins.data}</div>
+      <div class="insight-next"><strong>מה לעקוב אחריו</strong>${ins.next}</div>
+    </div>`).join('');
+}
+
+function renderDistrictCards() {
+  const maxP = Math.max(...DISTRICTS.map(d=>d.p25));
+  document.getElementById('district-grid').innerHTML = DISTRICTS.map(d => `
+    <div class="district-card">
+      <div class="district-name">${d.n}</div>
+      <div class="district-row"><span>חדשות 2025</span><span style="color:${d.chgN<0?'var(--red)':'var(--green)'}">${d.new25.toLocaleString()} (${d.chgN>0?'+':''}${d.chgN}%)</span></div>
+      <div class="district-row"><span>יד שנייה 2025</span><span style="color:${d.chgO<0?'var(--red)':'var(--green)'}">${d.old25.toLocaleString()} (${d.chgO>0?'+':''}${d.chgO}%)</span></div>
+      <div class="district-row"><span>היתרים 2025</span><span>${d.p25.toLocaleString()}</span></div>
+      <div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.round(d.p25/maxP*100)}%;background:var(--green)"></div></div>
+    </div>`).join('');
+}
+
+function renderDistrictPrices() {
+  const maxP = Math.max(...DISTRICT_PRICES.map(d=>d.p26));
+  document.getElementById('district-price-grid').innerHTML = DISTRICT_PRICES.map(d => `
+    <div class="dpcard">
+      <div class="dpcard-name">${d.n}</div>
+      <div class="dpcard-price">${d.p26.toLocaleString()}<span class="dpcard-unit"> אלפי ₪</span></div>
+      <div class="dpcard-chg" style="color:${d.chg<0?'var(--red)':'var(--green)'}">${d.chg>0?'+':''}${d.chg}% לעומת 2025</div>
+      <div class="dpcard-bar"><div class="dpcard-bar-fill" style="width:${Math.round(d.p26/maxP*100)}%;background:${d.chg<0?'var(--red)':'var(--green)'}"></div></div>
+    </div>`).join('');
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.removeAttribute('aria-current');});
+  document.getElementById('page-'+id).classList.add('active');
+  const map={overview:0,pipeline:1,prices:2,compare:3,districts:4,bottom:5};
+  const btn=document.querySelectorAll('.nav-btn')[map[id]];
+  btn.classList.add('active'); btn.setAttribute('aria-current','page');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderKPIs(); renderFunnel(); renderInsights(); renderDistrictCards(); renderDistrictPrices();
+
+// ── CHARTS ───────────────────────────────────────
+Chart.defaults.font.family="'Heebo',sans-serif";
+const gc='rgba(0,0,0,0.05)',tc='#888780';
+
+// מדד מחירים 2023-2026
+const priceLabels=['ינו׳23','מרס23','מאי23','יול׳23','ספט23','נוב׳23','ינו׳24','מרס24','מאי24','יול׳24','ספט24','נוב׳24','ינו׳25','מרס25','מאי25','יול׳25','ספט25','נוב׳25','ינו׳26','מרס26','מאי26'];
+const priceData=[563,568.7,564.8,560.3,558.6,554.7,563,574.9,583.6,591.8,592.4,596.6,606.2,608.6,605,602,597.2,596,600.2,601.4,593];
+
+new Chart(document.getElementById('priceIndexChart'),{
+  type:'line',
+  data:{labels:priceLabels,datasets:[{data:priceData,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.08)',fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:priceData.map((v,i)=>i===priceLabels.indexOf('ינו׳25')?'#E24B4A':i===20?'#E24B4A':'transparent'),pointRadius:priceData.map((v,i)=>(i===13||i===20)?6:2)}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},annotation:{annotations:{line1:{type:'line',xMin:13,xMax:13,borderColor:'rgba(226,75,74,0.4)',borderDash:[5,3]}}}},scales:{x:{grid:{color:gc},ticks:{color:tc,maxRotation:45}},y:{grid:{color:gc},ticks:{color:tc},min:545,max:620}}}
+});
+
+new Chart(document.getElementById('salesChart'),{
+  type:'bar',
+  data:{labels:['2023','2024','2025'],datasets:[
+    {label:'סך הכל',data:[71405,103185,90690],backgroundColor:'#1D9E75',borderRadius:5},
+    {label:'חדשות',data:[27537,46094,34030],backgroundColor:'#185FA5',borderRadius:5},
+    {label:'יד שנייה',data:[44095,57091,56660],backgroundColor:'#9FE1CB',borderRadius:5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('pipeChart'),{
+  type:'bar',
+  data:{labels:['2022','2023','2024','2025'],datasets:[
+    {label:'היתרים',data:[79026,79518,79473,81230],backgroundColor:'#534AB7',borderRadius:5},
+    {label:'התחלות',data:[69637,64235,66784,80010],backgroundColor:'#1D9E75',borderRadius:5},
+    {label:'גמרים',data:[53273,60962,53733,59750],backgroundColor:'#185FA5',borderRadius:5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('durationChart'),{
+  type:'line',
+  data:{labels:['2020','2021','2022','2023','2024','2025'],datasets:[
+    {data:[30,31,33,34,34.3,37.8],borderColor:'#E24B4A',tension:0.3,pointRadius:5,pointBackgroundColor:'#E24B4A',fill:false},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v+' חו׳'},min:26}}}
+});
+
+// מדד מחוזות - מאי 2026
+new Chart(document.getElementById('districtIndexChart'),{
+  type:'bar',
+  data:{
+    labels:['דרום','ירושלים','מרכז','חיפה','תל אביב','צפון'],
+    datasets:[
+      {label:'מדד מאי 2026',data:[573.3,567.4,589.9,617.8,562.8,662.8],backgroundColor:['#888780','#534AB7','#1D9E75','#185FA5','#E24B4A','#BA7517'],borderRadius:6},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc},min:540}}}
+});
+
+// מגמת מדד מחוזות - ינואר 2025 עד מאי 2026
+const districtTrendLabels=['ינו׳25','מרס25','מאי25','יול׳25','ספט25','נוב׳25','ינו׳26','מרס26','מאי26'];
+new Chart(document.getElementById('districtTrendChart'),{
+  type:'line',
+  data:{labels:districtTrendLabels,datasets:[
+    {label:'תל אביב',data:[589.3,592.8,577.5,568.3,563.8,555.9,569.8,571.4,562.8],borderColor:'#E24B4A',tension:0.3,pointRadius:3,fill:false},
+    {label:'מרכז',data:[610.4,606.1,609.7,603.7,589.9,589.3,586.4,590.5,589.9],borderColor:'#1D9E75',tension:0.3,pointRadius:3,fill:false},
+    {label:'ירושלים',data:[563.5,569.7,565.7,570.2,577,597.4,597.4,591.4,567.4],borderColor:'#534AB7',tension:0.3,borderDash:[5,3],pointRadius:3,fill:false},
+    {label:'צפון',data:[643.9,657.5,653.6,658.2,659.6,660.3,662.9,667.5,662.8],borderColor:'#185FA5',tension:0.3,pointRadius:3,fill:false},
+    {label:'חיפה',data:[621.2,624.3,634.3,641.3,630.4,622.9,626,631.6,617.8],borderColor:'#BA7517',tension:0.3,borderDash:[5,3],pointRadius:3,fill:false},
+    {label:'דרום',data:[575.8,581.5,576.3,578.6,580.4,572.8,580.3,579.1,573.3],borderColor:'#888780',tension:0.3,pointRadius:3,fill:false},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc},min:540}}}
+});
+
+// מחירים ממוצעים Q1 2026 vs 2025
+new Chart(document.getElementById('avgPriceChart'),{
+  type:'bar',
+  data:{
+    labels:['ירושלים','צפון','חיפה','מרכז','תל אביב','דרום'],
+    datasets:[
+      {label:'Q1 2026',data:[2942,1506,1887,2747,3406,1581],backgroundColor:'#1D9E75',borderRadius:5},
+      {label:'2025 ממוצע',data:[2970,1539,1829,2713,3355,1560],backgroundColor:'#9FE1CB',borderRadius:5},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+// מדד דירות חדשות
+new Chart(document.getElementById('newPriceChart'),{
+  type:'line',
+  data:{labels:['ינו׳24','מרס24','מאי24','יול׳24','ספט24','נוב׳24','ינו׳25','מרס25','מאי25','יול׳25','ספט25','נוב׳25','ינו׳26','מרס26','מאי26'],
+  datasets:[{data:[508,519,525,533,531,534,546,542,536,534,530,533,536.4,536.4,535.4],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',fill:true,tension:0.3,pointRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,maxRotation:45}},y:{grid:{color:gc},ticks:{color:tc},min:500}}}
+});
+
+// מחירים לפי חדרים Q1 2026
+new Chart(document.getElementById('roomsChart'),{
+  type:'bar',
+  data:{
+    labels:['1-2 חד\'','2.5-3 חד\'','3.5-4 חד\'','4.5-5 חד\'','5.5-6 חד\''],
+    datasets:[{data:[1665,1808,2302,2959,3545],backgroundColor:['#9FE1CB','#1D9E75','#185FA5','#534AB7','#E24B4A'],borderRadius:5}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,maxRotation:30}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+// מסלול מלא מדד 2022-2026
+new Chart(document.getElementById('fullIndexChart'),{
+  type:'line',
+  data:{labels:['ינו׳22','מאי22','ספט22','ינו׳23','מאי23','ספט23','ינו׳24','מאי24','ספט24','ינו׳25','מאי25','ספט25','ינו׳26','מאי26'],
+  datasets:[{data:[500,560,575,563,564.8,558.6,563,583.6,592.4,606.2,605,597.2,600.2,593],borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',fill:true,tension:0.3,pointRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc,maxRotation:45}},y:{grid:{color:gc},ticks:{color:tc},min:480}}}
+});
+
+new Chart(document.getElementById('compareChart'),{
+  type:'bar',
+  data:{
+    labels:['מכירות (K)','התחלות (K)','גמרים (K)','היתרים (K)','בנייה פעילה (÷4)'],
+    datasets:[
+      {label:'2023',data:[71.4,64.2,61.0,79.5,41.9],backgroundColor:'#AFA9EC',borderRadius:5},
+      {label:'2024',data:[103.2,66.8,53.7,79.5,46.8],backgroundColor:'#534AB7',borderRadius:5},
+      {label:'2025',data:[90.7,80.0,59.8,81.2,51.8],backgroundColor:'#1D9E75',borderRadius:5},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc}}}}
+});
+
+new Chart(document.getElementById('districtChart'),{
+  type:'bar',
+  data:{labels:DISTRICTS.map(d=>d.n),datasets:[
+    {label:'חדשות 2025',data:DISTRICTS.map(d=>d.new25),backgroundColor:'#1D9E75',borderRadius:4},
+    {label:'חדשות 2024',data:DISTRICTS.map(d=>d.new24),backgroundColor:'#9FE1CB',borderRadius:4},
+    {label:'יד שנייה 2025',data:DISTRICTS.map(d=>d.old25),backgroundColor:'#185FA5',borderRadius:4},
+    {label:'יד שנייה 2024',data:DISTRICTS.map(d=>d.old24),backgroundColor:'#B5D4F4',borderRadius:4},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:v=>v.toLocaleString()}}}}
+});
+
+new Chart(document.getElementById('radarChart'),{
+  type:'radar',
+  data:{labels:['ביקוש\nמכירות','היצע\nגמרים','צינור\nבנייה','היתרים','מלאי\n(הפוך)','התחלות'],
+  datasets:[
+    {label:'2025',data:[70,82,95,80,40,95],backgroundColor:'rgba(29,158,117,0.15)',borderColor:'#1D9E75',pointBackgroundColor:'#1D9E75',pointRadius:5},
+    {label:'2024',data:[90,65,88,78,60,75],backgroundColor:'rgba(83,74,183,0.1)',borderColor:'#534AB7',pointBackgroundColor:'#534AB7',pointRadius:5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{grid:{color:gc},ticks:{display:false},pointLabels:{color:tc,font:{size:12,family:"'Heebo'"}},min:0,max:100}}}
+});
+</script>
+</body>
+</html>
