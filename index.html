@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1M0EJZM1GC"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-1M0EJZM1GC');
+</script>
+
 <title>מדד נדל"ן ישראל</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -203,6 +210,108 @@ footer a{color:var(--gm);text-decoration:none}
   .hero-stats{gap:1.25rem}
   .fc-v{width:100%;flex-direction:row;gap:8px;padding:.65rem 1rem;border-left:none;border-bottom:1px solid var(--line)}
 }
+
+/* ═══ TODAY (home) ═══ */
+:is(#pg-today,#pg-predictions,#pg-news){--h-ac:var(--blue);--h-sf:var(--bl);--h-ok:var(--green);--h-no:var(--red);--h-wr:var(--amber);--h-q:var(--purple);--h-mu:var(--ink3);--h-ln:var(--line)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-wr{max-width:1200px;margin:0 auto;padding:1.25rem 1.5rem 2.5rem;display:grid;gap:16px}
+:is(#pg-today,#pg-predictions,#pg-news) .h-c{background:#fff;border:1px solid var(--h-ln);border-radius:16px;padding:20px;display:grid;gap:10px;align-content:start}
+:is(#pg-today,#pg-predictions,#pg-news) .h-hero{background:var(--h-sf);border:0;position:relative;overflow:hidden;padding-bottom:72px}
+:is(#pg-today,#pg-predictions,#pg-news) .h-hero svg{position:absolute;bottom:0;inset-inline:0;width:100%;height:70px;opacity:.35}
+:is(#pg-today,#pg-predictions,#pg-news) .h-ey{font-size:13px;color:var(--h-ac);font-weight:600}
+:is(#pg-today,#pg-predictions,#pg-news) h1,:is(#pg-today,#pg-predictions,#pg-news) h2,:is(#pg-today,#pg-predictions,#pg-news) h3{margin:0;text-wrap:balance;line-height:1.35}
+:is(#pg-today,#pg-predictions,#pg-news) h1{font-size:24px}:is(#pg-today,#pg-predictions,#pg-news) h2{font-size:18px}:is(#pg-today,#pg-predictions,#pg-news) h3{font-size:17px}
+:is(#pg-today,#pg-predictions,#pg-news) ol{padding-inline-start:20px;display:grid;gap:8px;line-height:1.6}
+:is(#pg-today,#pg-predictions,#pg-news) .h-mu{color:var(--ink2);font-size:14px;line-height:1.6}:is(#pg-today,#pg-predictions,#pg-news) .h-src{font-size:12px;color:var(--h-mu)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-v{justify-self:start;font-size:13px;font-weight:600;padding:2px 10px;border-radius:12px;border:1.5px solid currentColor}
+:is(#pg-today,#pg-predictions,#pg-news) .confirmed{color:var(--h-ok)}:is(#pg-today,#pg-predictions,#pg-news) .exaggerated{color:var(--h-wr)}:is(#pg-today,#pg-predictions,#pg-news) .contradicts{color:var(--h-no)}:is(#pg-today,#pg-predictions,#pg-news) .checking{color:var(--h-q)}:is(#pg-today,#pg-predictions,#pg-news) .unverifiable{color:var(--h-mu)}:is(#pg-today,#pg-predictions,#pg-news) .h-dn{color:var(--h-no)}:is(#pg-today,#pg-predictions,#pg-news) .h-up{color:var(--h-ok)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-x{background:var(--h-sf);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.6}:is(#pg-today,#pg-predictions,#pg-news) .h-x b{color:var(--h-ac)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-sc{display:flex;gap:8px;flex-wrap:wrap;font-size:14px}:is(#pg-today,#pg-predictions,#pg-news) .h-sc span{padding:4px 10px;border-radius:12px;background:#fff;border:1px solid var(--h-ln)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-g2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+:is(#pg-today,#pg-predictions,#pg-news) .h-tl{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+:is(#pg-today,#pg-predictions,#pg-news) .h-t{background:#fff;border:1px solid var(--h-ln);border-radius:14px;padding:14px;display:grid;gap:4px;align-content:start;text-align:right;font:inherit;color:inherit;cursor:pointer}
+:is(#pg-today,#pg-predictions,#pg-news) .h-t:hover{border-color:var(--h-ac)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-t .l{font-size:13px;color:var(--h-mu)}:is(#pg-today,#pg-predictions,#pg-news) .h-t .n{direction:ltr;text-align:right;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}:is(#pg-today,#pg-predictions,#pg-news) .h-t p{font-size:13px;line-height:1.5}:is(#pg-today,#pg-predictions,#pg-news) .h-t .go{font-size:13px;color:var(--h-ac)}
+:is(#pg-today,#pg-predictions,#pg-news) .h-ct{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}:is(#pg-today,#pg-predictions,#pg-news) .h-ct ul{list-style:none;display:grid;gap:4px}
+:is(#pg-today,#pg-predictions,#pg-news) .h-lnk{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--h-ac);cursor:pointer}
+:is(#pg-today,#pg-predictions,#pg-news) .h-hd{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
+:is(#pg-today,#pg-predictions,#pg-news) svg text{fill:var(--h-mu);font-size:11px}:is(#pg-today,#pg-predictions,#pg-news) .h-chart{direction:ltr}
+:is(#pg-today,#pg-predictions,#pg-news) select{font:inherit;background:#fff;border:1px solid var(--h-ln);border-radius:10px;padding:6px}
+:is(#pg-today,#pg-predictions,#pg-news) .h-big{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+:is(#pg-today,#pg-predictions,#pg-news) a{color:inherit}
+
+
+/* ═══ NEWS (חדשות) ═══ */
+:is(#pg-today,#pg-news) .partial{color:var(--amber)}:is(#pg-today,#pg-news) .misleading{color:var(--red)}
+#pg-today .h-links{list-style:none;display:grid;gap:6px;font-size:14px;line-height:1.5}
+.n-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:6px;font-size:14px;line-height:1.55;align-content:start}
+.n-card h3{font-size:16px}.n-card h3 a{text-decoration:none}.n-card h3 a:hover{text-decoration:underline}
+.n-claim{background:var(--paper);border-radius:8px;padding:8px 10px;display:grid;gap:4px;font-size:13.5px}
+.n-more{justify-self:center}
+/* ═══ WHO WAS RIGHT (מי צדק?) ═══ */
+#pg-predictions [hidden],#pg-today [hidden],.w-dlg [hidden]{display:none!important}
+#pg-predictions .w-hero{display:grid;gap:8px}
+#pg-predictions .w-hero h1{font-size:28px}
+#pg-predictions .w-demo,.w-demo{font-size:13px;background:var(--al);color:var(--amber);border-radius:10px;padding:8px 12px;line-height:1.5}
+.w-stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.w-stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.w-stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}.w-stat span{font-size:12.5px;color:var(--ink2)}
+.w-feed{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.w-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;align-content:start;font-size:14px;line-height:1.55}
+.w-card.w-compact{padding:14px;gap:6px}
+.w-who{display:flex;gap:10px;align-items:center}
+.w-av{width:34px;height:34px;border-radius:50%;background:var(--bl);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.w-av.o{border-radius:8px}
+.w-name{font-weight:600;background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:right}
+.w-name:hover{color:var(--blue);text-decoration:underline}
+.w-sub{font-size:12.5px;color:var(--ink3)}
+.w-chips{display:flex;flex-wrap:wrap;gap:6px}
+.w-chip{font-size:12px;padding:1px 8px;border-radius:10px;background:var(--paper);color:var(--ink2);border:1px solid var(--line)}
+.w-q{margin:0;padding:8px 12px;border-inline-start:3px solid var(--blue);background:var(--paper);border-radius:6px;font-size:15px}
+.w-meta{font-size:12.5px;color:var(--ink2)}
+.w-res{display:grid;gap:4px;background:var(--paper);border-radius:10px;padding:10px}
+.w-bar{display:grid;grid-template-columns:44px 1fr 96px;gap:8px;align-items:center;font-size:12.5px}
+.w-bar i{display:block;height:8px;border-radius:4px;background:var(--gm)}
+.w-bar i.a{background:var(--blue)}
+.w-bar .num{direction:ltr;text-align:left;font-variant-numeric:tabular-nums}
+.w-st{justify-self:start;font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:12px;border:1.5px solid currentColor;display:inline-flex;gap:6px;align-items:center}
+.w-st::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.w-st.open{color:var(--purple)}.w-st.hit{color:var(--green)}.w-st.partial{color:var(--amber)}.w-st.miss{color:var(--red)}.w-st.na{color:var(--ink3)}
+.w-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:12.5px;color:var(--ink3)}
+.w-link{background:none;border:0;padding:0;font:inherit;font-size:13px;color:var(--blue);cursor:pointer}
+.w-link:hover{text-decoration:underline}
+.w-det{display:grid;gap:6px;font-size:13px;border-top:1px dashed var(--line);padding-top:8px}
+.w-det dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:0}.w-det dt{color:var(--ink3)}.w-det dd{margin:0}
+.w-corr{background:var(--al);border-radius:8px;padding:8px;font-size:12.5px}
+.w-tools{display:grid;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.w-tools input[type=search]{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.w-filters{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.w-filters select{font:inherit;font-size:13.5px;padding:7px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
+.w-count{font-size:13px;color:var(--ink2)}
+.w-cons{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.w-split{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--paper2)}
+.w-split i{display:block;height:100%}
+.w-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2)}
+.w-legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-inline-end:4px;background:var(--c)}
+.w-ents{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.w-ent{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;cursor:pointer;text-align:right;font:inherit;color:inherit}
+.w-ent:hover{border-color:var(--blue)}
+.w-warn{font-size:12.5px;background:var(--al);color:var(--amber);border-radius:8px;padding:6px 10px}
+.w-tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.w-tbl th,.w-tbl td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right}.w-tbl th{font-size:12px;color:var(--ink3);font-weight:500}
+.w-tl{display:grid;gap:10px;border-inline-start:2px solid var(--line);padding-inline-start:14px}
+.w-method{display:grid;gap:14px;max-width:760px}
+.w-method h2{font-size:18px}.w-method p,.w-method li{font-size:14.5px;line-height:1.7;color:var(--ink2)}
+.w-method ul{padding-inline-start:20px}
+.w-back{justify-self:start}
+.w-dlg{border:1px solid var(--line);border-radius:14px;padding:20px;max-width:440px;width:calc(100% - 32px);direction:rtl}
+.w-dlg::backdrop{background:rgba(0,0,0,.35)}
+.w-dlg form{display:grid;gap:10px}.w-dlg label{display:grid;gap:4px;font-size:13px;color:var(--ink2)}
+.w-dlg input,.w-dlg textarea{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px}
+.w-row{display:flex;gap:8px}
+.w-btn{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.w-btn-p{background:var(--blue);color:#fff;border-color:var(--blue)}
+.w-sec-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:8px}
+.w-sec-hd h2{font-size:18px}
 </style>
 </head>
 <body>
@@ -214,13 +323,16 @@ footer a{color:var(--gm);text-decoration:none}
         <div class="logo-dot"></div>
         <div>
           <div class="logo-name">מדד נדל"ן ישראל</div>
-          <div class="logo-sub">נתוני הלמ"ס ובנק ישראל — ניתוח עצמאי</div>
+          <div class="logo-sub">מה כתבו על נדל"ן, ומה הנתונים אומרים</div>
         </div>
       </div>
       <div class="badge">עדכון אוגוסט 2026</div>
     </div>
     <nav class="nav">
-      <button class="nb on" data-page="overview">סקירת שוק</button>
+      <button class="nb on" data-page="today">היום</button>
+      <button class="nb" data-page="news">חדשות</button>
+      <button class="nb" data-page="predictions">מי צדק?</button>
+      <button class="nb" data-page="overview">סקירת שוק</button>
       <button class="nb" data-page="pipeline">צינור הדיור</button>
       <button class="nb" data-page="demand">ביקוש</button>
       <button class="nb" data-page="supply">היצע</button>
@@ -234,8 +346,52 @@ footer a{color:var(--gm);text-decoration:none}
   </div>
 </header>
 
+<!-- ═══ TODAY ═══ -->
+<div id="pg-today" class="pg on"><div class="h-wr">
+<section class="h-c h-hero"><div class="h-ey">תדריך הבוקר · 60 שניות</div>
+<h1>שלושה דברים שכדאי לדעת השבוע</h1>
+<ol id="h-brief"></ol>
+<div class="h-sc" id="h-score"></div>
+<svg viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V52h22V38h14v14h10V24h18v46M64 70V44h12V30h10v14h16V16h20v54M122 70V40h16v-8h12v38M150 70V26h8V14h8v12h8v44M174 70V48h24V34h16v36M214 70V20h22v50M236 70V42h18V30h14v40M268 70V50h20V22h16v48M304 70V36h14V26h12v44M330 70V46h22V32h18v38M370 70V28h14v-8h8v8h8v42" fill="none" stroke="var(--blue)" stroke-width="1.5"/></svg>
+</section>
+<div class="h-hd"><div class="h-ey">לוח המדדים · מה קורה בשוק</div></div>
+<div class="h-tl" id="h-tiles"></div>
+<div class="h-hd"><div class="h-ey">החדשות, בבדיקה מול הנתונים</div><span id="h-news-more"></span></div>
+<div class="h-g2" id="h-stories"></div>
+<div class="h-hd"><div class="h-ey">כל הנתונים, לפי נושא</div></div>
+<div class="h-ct">
+<section class="h-c"><h3>מחירים ועסקאות</h3><p class="h-mu">כמה עולות דירות, איפה, ומי קונה</p><ul><li><button class="h-lnk" data-go="prices">מחירים ←</button></li><li><button class="h-lnk" data-go="districts">מחוזות ←</button></li><li><button class="h-lnk" data-go="demand">ביקוש ←</button></li></ul></section><section class="h-c"><h3>בנייה והיצע</h3><p class="h-mu">כמה דירות נבנות, ומה עומד למכירה</p><ul><li><button class="h-lnk" data-go="pipeline">צינור הדיור ←</button></li><li><button class="h-lnk" data-go="supply">היצע ←</button></li></ul></section><section class="h-c"><h3>מימון ושכירות</h3><p class="h-mu">משכנתאות, ריבית ושכר דירה</p><ul><li><button class="h-lnk" data-go="mortgages">משכנתאות ←</button></li><li><button class="h-lnk" data-go="rental">שכירות ←</button></li></ul></section><section class="h-c"><h3>ניתוח ומסקנות</h3><p class="h-mu">התמונה הגדולה, ולאן השוק הולך</p><ul><li><button class="h-lnk" data-go="overview">סקירת שוק ←</button></li><li><button class="h-lnk" data-go="factcheck">מד-אמת ←</button></li><li><button class="h-lnk" data-go="bottom">שורה תחתונה ←</button></li></ul></section>
+</div>
+<div class="h-g2">
+<section class="h-c"><div class="h-ey">העיר שלי</div><h2>כמה עולה דירה של 100 מ"ר?</h2>
+<label class="h-mu" for="h-cs">בחרו עיר</label><select id="h-cs"></select>
+<div class="h-big" id="h-cp"></div><div id="h-cc" class="h-mu"></div>
+<div class="h-x"><b>בקרוב:</b> כל יישוב בארץ, עסקאות אחרונות בסביבה, ועדכון כשמשהו זז.</div>
+<p class="h-src">חציון מחיר למ"ר בדירות בבית משותף, 2026 עד כה מול 2025 · רשות המסים. המחיר ל-100 מ"ר הוא הערכה.</p></section>
+
+</div>
+<div id="h-who" style="display:grid;gap:12px"></div>
+</div></div>
+
+<!-- ═══ NEWS ═══ -->
+<div id="pg-news" class="pg"><div class="h-wr" id="n-app"><p class="h-mu">טוען…</p></div></div>
+
+<!-- ═══ WHO WAS RIGHT (מי צדק?) ═══ -->
+<div id="pg-predictions" class="pg"><div class="h-wr" id="w-app"><p class="h-mu">טוען…</p></div>
+<dialog id="w-report" class="w-dlg"><form method="dialog" id="w-report-form">
+<h3>דיווח על טעות או חסר הקשר</h3>
+<p class="h-mu">אם תחזית הוצגה באופן לא מדויק, נשמח לקבל קישור למקור ומידע נוסף. כל תיקון נרשם בהיסטוריית התיקונים של התחזית, ולא נמחק.</p>
+<label>התחזית<input id="w-r-id" readonly></label>
+<label>מה לא מדויק?<textarea id="w-r-text" rows="4" required></textarea></label>
+<label>קישור למקור (לא חובה)<input id="w-r-url" type="url" placeholder="https://"></label>
+<label>שם ודרך ליצירת קשר (לא חובה)<input id="w-r-who"></label>
+<p class="h-src" id="w-r-msg" hidden>בגרסה הנוכחית הטופס עוד לא מחובר לשרת, ולכן הפנייה לא נשלחה.</p>
+<div class="w-row"><button type="submit" value="send" class="w-btn w-btn-p">שליחה</button><button type="button" class="w-btn" id="w-r-close">סגירה</button></div>
+</form></dialog>
+</div>
+
 <!-- ═══ OVERVIEW ═══ -->
-<div id="pg-overview" class="pg on">
+<div id="pg-overview" class="pg">
   <div class="hero"><div class="hero-inner">
     <div class="hero-tag">ניתוח שוק הנדל"ן · אוגוסט 2026</div>
     <div class="hero-h">היצע שיא פוגש ביקוש מתמתן — מאזן הכוחות משתנה</div>
@@ -633,6 +789,9 @@ footer a{color:var(--gm);text-decoration:none}
 <footer><p>מבוסס נתוני <a href="https://www.cbs.gov.il" target="_blank">הלמ"ס</a> ובנק ישראל · עדכון אוגוסט 2026 · אינו מהווה ייעוץ השקעות</p></footer>
 
 <script>// Global functions
+// Loads a data file from data/site/, and falls back to the site root (in case files were uploaded without folders).
+function getJSON(p){const ok=r=>{if(!r.ok)throw new Error(r.status);return r.json();};return fetch(p).then(ok).catch(()=>fetch(p.split('/').pop()).then(ok));}
+
 
 // ═══ NAV ═══
 document.querySelectorAll('.nb').forEach(btn => {
@@ -1046,6 +1205,370 @@ new Chart(document.getElementById('c-radar'),{type:'radar',data:{
 
 
 });
+
+// ═══ DEEP LINK: market.html#prices opens that page ═══
+function openFromHash(){
+  const parts=(location.hash||'').slice(1).split('/'), id=parts[0], sub=parts[1]||'';
+  const btn=id&&document.querySelector('.nb[data-page="'+id+'"]');
+  if(btn&&!btn.classList.contains('on')){ btn.click(); if(sub) history.replaceState(null,'','#'+id+'/'+sub); }
+  if(id==='predictions'&&window.Who) Who.route(sub);
+}
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>history.replaceState(null,'','#'+b.dataset.page)));
+window.addEventListener('hashchange',openFromHash);
+openFromHash();
+
+// ═══ TODAY: rendered from data/site/home.json ═══
+(function(){
+  const $=id=>document.getElementById(id);
+  function go(page){const b=document.querySelector('.nb[data-page="'+page+'"]');if(b)b.click();}
+  document.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a){e.preventDefault();go(a.dataset.go);}});
+  function chart(D,period){const H=D.length*22+6;return '<svg class="h-chart" viewBox="0 0 300 '+H+'" width="100%" height="'+H+'" role="img" aria-label="שינוי שנתי במחירים לפי מחוז">'+D.map((d,i)=>{const y=i*22+4,w=Math.abs(d[1])*30,up=d[1]>0,x=up?130:130-w;return '<text x="296" y="'+(y+12)+'" text-anchor="end">'+d[0]+'</text><rect x="'+x+'" y="'+(y+2)+'" width="'+w+'" height="12" rx="4" fill="'+(up?'#1A7F5E':'#C0392B')+'" opacity=".85"/><text x="'+(up?130+w+4:130-w-4)+'" y="'+(y+12)+'" text-anchor="'+(up?'start':'end')+'">'+(up?'+':'')+d[1]+'%</text>'}).join('')+'<line x1="130" y1="0" x2="130" y2="'+H+'" stroke="rgba(0,0,0,.15)"/></svg><p class="h-src">שינוי שנתי במחירים לפי מחוז, '+period+' · הלמ"ס</p>';}
+  getJSON('data/site/home.json').then(h=>{
+    $('h-brief').innerHTML=h.brief.map(b=>'<li>'+b+'</li>').join('');
+    const esc=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const dd=x=>x?x.split('-').reverse().map(Number).join('.'):'';
+    const nb=h.news_block, VL=[['מאושש','confirmed'],['מדויק חלקית','partial'],['מטעה','misleading'],['מנוגד לנתונים','contradicts'],['לא ניתן לבדוק','unverifiable']];
+    if(nb){
+      $('h-score').innerHTML='<span>'+nb.articles_in_window+' כתבות ב-30 יום · '+nb.outlets+' כלי תקשורת</span>'+VL.filter(v=>nb.claims_by_verdict[v[0]]).map(v=>'<span class="'+v[1]+'">'+nb.claims_by_verdict[v[0]]+' '+v[0]+'</span>').join('');
+      $('h-stories').innerHTML=nb.items.map(it=>it.kind==='story'
+        ? '<article class="h-c"><div class="h-ey">'+esc(it.label)+' · '+esc(it.meta)+'</div><h3>'+esc(it.title)+'</h3><div class="h-mu"><b>מה הנתונים אומרים:</b> '+esc(it.check)+'</div><ul class="h-links">'+it.links.map(l=>'<li><a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.headline)+'</a> <span class="h-src">'+esc(l.outlet)+'</span></li>').join('')+'</ul></article>'
+        : '<article class="h-c"><div class="h-src">'+esc(it.label)+' · '+esc(it.outlet)+' · '+dd(it.date)+'</div><h3><a href="'+esc(it.url)+'" target="_blank" rel="noopener">'+esc(it.headline)+'</a></h3><div class="h-x"><b>הטענה:</b> "'+esc(it.claim)+'"</div><span class="h-v '+it.verdict+'">'+esc(it.verdict_label)+'</span><div class="h-mu"><b>מה הנתונים אומרים:</b> '+esc(it.reason)+(it.source_url?' <a href="'+esc(it.source_url)+'" target="_blank" rel="noopener">מקור הנתון</a>':'')+'</div></article>').join('');
+      $('h-news-more').innerHTML='<button class="h-lnk" data-go="news">לכל '+nb.articles_in_window+' הכתבות ←</button>';
+    }
+    $('h-tiles').innerHTML=h.tiles.map(t=>'<button class="h-t" data-go="'+t.page+'"><span class="l">'+t.label+'</span><span class="n">'+t.value+'</span><p>'+t.text+'</p><span class="h-src">'+t.src+'</span><span class="go">לעמוד המלא ←</span></button>').join('');
+    const C=h.cities,cs=$('h-cs');cs.innerHTML=C.map((c,i)=>'<option value="'+i+'">'+c[0]+'</option>').join('');
+    cs.onchange=()=>{const c=C[cs.value],ch=(c[1]/c[2]-1)*100;$('h-cp').textContent='כ-'+(c[1]/10000).toFixed(2)+' מיליון ₪';$('h-cc').innerHTML='מחיר למ"ר חציוני: ₪'+c[1].toLocaleString('he-IL')+' · <span class="'+(ch<0?'h-dn':'h-up')+'">'+ch.toFixed(1)+'% לעומת 2025</span>'};cs.onchange();
+  }).catch(()=>{$('h-brief').innerHTML='<li>לא הצלחנו לטעון את הנתונים. נסו לרענן את העמוד.</li>'});
+})();
+
+// ═══ WHO WAS RIGHT (מי צדק?) ═══
+// Data layer: swap `source` for an API endpoint later; the rest of the code only uses WhoData.load().
+const WhoData = { source: 'data/site/predictions.json', load() { return getJSON(this.source); } };
+
+var Who = (function () {
+  let D = null, M = {}, E = {}, P = [], EV = {}, ready = null;
+  const F = { q: '', year: '', topic: '', entity: '', status: '', meas: '', geo: '' };
+  const STAT = { open: 'עדיין פתוחה', hit: 'התממשה במידה גבוהה', partial: 'התממשה חלקית', miss: 'לא התממשה', na: 'לא ניתנת לבדיקה' };
+  const MEAS = { high: 'מדידה מאוד', partial: 'מדידה חלקית', vague: 'אמירה עמומה' };
+  const SRC = { primary: 'מקור ראשוני', interview: 'ראיון מלא', official: 'הודעה רשמית', report: 'דוח', article_quote: 'כתבה שמצטטת ישירות' };
+  const DIR = { up: 'עלייה', down: 'ירידה', flat: 'יציבות' };
+  const HM = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const dShort = d => { const [y, m, dd] = d.split('-'); return +dd + '.' + (+m) + '.' + y; };
+  const dLong = d => { const [y, m, dd] = d.split('-'); return +dd + ' ב' + HM[+m - 1] + ' ' + y; };
+  const bd = s => '<bdi dir="ltr">' + s + '</bdi>';
+  const idx = v => (+v).toLocaleString('he-IL', { maximumFractionDigits: 2 });
+  const initials = n => n.split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('');
+
+  // ── evaluation: turns a structured forecast + outcome into a status ──
+  function fmt(v, m, signed) {
+    if (v == null || !m) return '';
+    if (m.kind === 'change' || m.kind === 'yoy') return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1).replace(/\.0$/, '') + '%';
+    if (m.unit === '%') return v.toFixed(2).replace(/0$/, '') + '%';
+    return Math.round(v).toLocaleString('he-IL');
+  }
+  function base(p, m) { return (m.kind === 'change' || m.kind === 'yoy') ? 0 : (p.baseline ? p.baseline.value : null); }
+  function actual(p, m) { return (m.kind === 'change' || m.kind === 'yoy') ? p.outcome.change : p.outcome.value; }
+  function band(m, b, k) { return m[k] != null ? m[k] : (m[k + '_rel'] || 0) * Math.abs(b || 0); }
+  function dirOf(x, b, m) { const f = band(m, b, 'flat'); return x - b > f ? 'up' : x - b < -f ? 'down' : 'flat'; }
+  function predDir(p, m) {
+    const pr = p.target.prediction, b = base(p, m);
+    if (pr.type === 'direction') return pr.direction;
+    if (pr.type === 'range') return dirOf((pr.min + pr.max) / 2, b, m);
+    if (pr.type === 'threshold') return b == null ? null : (pr.value > b ? 'up' : 'down');
+    return b == null ? null : dirOf(pr.value, b, m);
+  }
+  function evaluate(p) {
+    const t = p.target, m = M[t.metric];
+    if (p.measurability === 'vague' || !m) return { status: 'na' };
+    if (!p.outcome || D.as_of < t.due) return { status: 'open' };
+    const pr = t.prediction, a = actual(p, m), b = base(p, m), tol = band(m, b, 'tol'), sc = band(m, b, 'scale');
+    const dA = dirOf(a, b, m), dP = predDir(p, m), r = { actual: a, dirA: dA, dirP: dP };
+    if (pr.type === 'direction') return Object.assign(r, { status: dA === pr.direction ? 'hit' : 'miss', dirOk: dA === pr.direction, how: 'תחזית כיוון בלבד: נבדק רק אם הכיוון התממש.' });
+    if (pr.type === 'threshold') { const ok = pr.op === '>' ? a > pr.value : a < pr.value; return Object.assign(r, { status: ok ? 'hit' : 'miss', dirOk: dP ? dP === dA : null, how: 'תחזית סף: נבדק אם הערך עבר את הרף שנקבע.' }); }
+    let err, pv;
+    if (pr.type === 'range') { pv = (pr.min + pr.max) / 2; err = a < pr.min ? pr.min - a : a > pr.max ? a - pr.max : 0; }
+    else { pv = pr.value; err = Math.abs(pv - a); }
+    const dirOk = dP === dA;
+    const status = !dirOk ? 'miss' : err <= tol ? 'hit' : 'partial';
+    const pp = m.kind !== 'level' || m.unit === '%';
+    const q = v => pp ? (+v).toFixed(m.kind === 'level' ? 2 : 1).replace(/\.?0+$/, '') + ' נקודות אחוז' : Math.round(v).toLocaleString('he-IL') + ' ' + m.unit;
+    const tolTxt = m.tol != null ? q(m.tol) : Math.round(m.tol_rel * 100) + '% מהערך';
+    return Object.assign(r, { status, dirOk, err, tol, pv, acc: Math.max(0, 1 - err / sc),
+      how: (pr.type === 'range' ? 'המרחק מהטווח שנחזה: ' : 'הפער בין התחזית לתוצאה: ') + q(err) + '. סף "התממשה במידה גבוהה": עד ' + tolTxt + '.' + (dirOk ? '' : ' הכיוון שנחזה לא התממש, ולכן התחזית לא התממשה גם אם הפער קטן.') });
+  }
+  function predText(p) {
+    const pr = p.target.prediction, m = M[p.target.metric];
+    if (pr.type === 'vague') return 'אין משתנה, כיוון או מועד מוגדרים';
+    if (pr.type === 'direction') return DIR[pr.direction];
+    if (pr.type === 'range') return fmt(pr.min, m) + ' עד ' + fmt(pr.max, m);
+    if (pr.type === 'threshold') return (pr.op === '>' ? 'מעל ' : 'מתחת ל-') + fmt(pr.value, m);
+    return fmt(pr.value, m);
+  }
+
+  // ── building blocks ──
+  const statusPill = ev => '<span class="w-st ' + ev.status + '">' + STAT[ev.status] + (ev.status === 'hit' && ev.how && ev.how.startsWith('תחזית כיוון') ? ' (כיוון בלבד)' : '') + '</span>';
+  const avatar = e => '<span class="w-av' + (e.type === 'organization' ? ' o' : '') + '" aria-hidden="true">' + esc(initials(e.name)) + '</span>';
+  function who(e, date) {
+    return '<div class="w-who">' + avatar(e) + '<div><button class="w-name" data-w-ent="' + e.id + '">' + esc(e.name) + '</button>' +
+      '<div class="w-sub">' + esc(e.role) + (e.org && e.org !== e.name ? ', ' + esc(e.org) : '') + ' · ' + (e.type === 'person' ? 'אדם' : 'גוף') + ', ' + esc(D.sectors[e.sector] || '') + (date ? ' · ' + dLong(date) : '') + '</div></div></div>';
+  }
+  function result(p, ev) {
+    const m = M[p.target.metric];
+    if (ev.status === 'na') return '<div class="w-res"><span class="w-meta">האמירה לא מגדירה משתנה, כיוון או מועד, ולכן אין לה ציון. היא נשמרת במאגר כדי שהתמונה תהיה מלאה.</span></div>';
+    if (ev.status === 'open') return '<div class="w-res"><span class="w-meta">נחזה: <b>' + predText(p) + '</b> · תאריך בדיקה: ' + dShort(p.target.due) + '</span></div>';
+    let bars = '';
+    if ((m.kind === 'change' || m.kind === 'yoy') && ev.pv != null) {
+      const mx = Math.max(Math.abs(ev.pv), Math.abs(ev.actual), 0.5);
+      const w = v => Math.max(4, Math.abs(v) / mx * 100);
+      bars = '<div class="w-bar"><span>נחזה</span><i style="width:' + w(ev.pv) + '%"></i><span class="num">' + (p.target.prediction.type === 'range' ? fmt(p.target.prediction.min, m) + ' – ' + fmt(p.target.prediction.max, m) : predText(p)) + '</span></div>' +
+             '<div class="w-bar"><span>בפועל</span><i class="a" style="width:' + w(ev.actual) + '%"></i><span class="num">' + bd(fmt(ev.actual, m)) + '</span></div>';
+    } else {
+      bars = '<span class="w-meta">נחזה: <b>' + predText(p) + '</b> · בפועל: <b>' + bd(fmt(ev.actual, m)) + '</b></span>';
+    }
+    return '<div class="w-res">' + bars + '<span class="h-src">' + esc(m.label) + ', ' + esc(p.target.end_label) + '</span></div>';
+  }
+  function details(p, ev) {
+    const m = M[p.target.metric], rows = [];
+    if (m) {
+      rows.push(['מדד לבדיקה', esc(m.label)], ['אזור', esc(m.geo)], ['טווח התחזית', esc(p.target.start_label) + ' ← ' + esc(p.target.end_label)], ['תאריך בדיקה', dShort(p.target.due)]);
+      if (p.baseline) rows.push(['ערך בזמן התחזית', m.kind === 'change' ? idx(p.baseline.value) + (p.target.metric.startsWith('price') ? ' נקודות מדד' : '') : fmt(p.baseline.value, m)]);
+      if (p.outcome) rows.push(['תוצאה בפועל', fmt(actual(p, m), m) + (m.kind === 'change' && p.baseline ? ' (מ-' + idx(p.baseline.value) + ' ל-' + idx(p.outcome.value) + ')' : '')], ['מקור הנתון', '<a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.src) + '</a>'], ['נבדק ב-', dShort(p.outcome.as_of)]);
+      if (ev.how) rows.push(['איך נקבע הסטטוס', esc(ev.how)]);
+    }
+    rows.push(['הקשר', esc(p.context)], ['סוג מקור', esc(SRC[p.source.type] || '') + ' · ' + esc(p.source.outlet) + (p.source.url ? ' · <a href="' + esc(p.source.url) + '" target="_blank" rel="noopener">למקור</a>' : ' · ' + esc(p.source.note || ''))]);
+    const corr = (p.corrections || []).map(c => '<div class="w-corr"><b>תיקון מ-' + dShort(c.date) + ':</b> ' + esc(c.text) + ' <span class="h-src">(' + esc(c.by) + ')</span></div>').join('');
+    return '<div class="w-det" hidden><dl>' + rows.map(r => '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>').join('') + '</dl>' + corr +
+      '<button class="w-link" data-w-report="' + p.id + '">דיווח על טעות או חסר הקשר</button></div>';
+  }
+  function card(p, compact) {
+    const e = E[p.entity_id], ev = EV[p.id];
+    const chips = p.topics.map(t => '<span class="w-chip">' + esc(D.topics[t]) + '</span>').join('') + '<span class="w-chip">' + MEAS[p.measurability] + '</span>';
+    return '<article class="w-card' + (compact ? ' w-compact' : '') + '"' + (compact ? ' data-pid="' : ' id="w-') + p.id + '">' + who(e, p.published_at) +
+      (compact ? '' : '<div class="w-chips">' + chips + '</div>') +
+      '<blockquote class="w-q">"' + esc(p.quote) + '"</blockquote>' + result(p, ev) + statusPill(ev) +
+      '<div class="w-foot"><button class="w-link" data-w-toggle="' + p.id + '">לבדיקה המלאה</button><span>' + esc(SRC[p.source.type] || '') + '</span></div>' + details(p, ev) + '</article>';
+  }
+
+  // ── derived views ──
+  const checked = p => ['hit', 'partial', 'miss'].includes(EV[p.id].status);
+  function stats() {
+    const n = P.length, c = P.filter(checked).length, ents = new Set(P.map(p => p.entity_id)).size;
+    const dir = P.filter(p => p.measurability !== 'vague').length, num = P.filter(p => p.measurability === 'high').length;
+    return [[n, 'תחזיות במעקב'], [c, 'כבר נבדקו'], [ents, 'אנשים וגופים'], [Math.round(dir / n * 100) + '%', 'כללו כיוון מדיד'], [Math.round(num / n * 100) + '%', 'כללו מספר ותאריך יעד']];
+  }
+  function consensus() {
+    const g = {};
+    P.filter(p => p.measurability !== 'vague' && M[p.target.metric]).forEach(p => { const k = p.target.metric + '|' + p.target.end_label; (g[k] = g[k] || []).push(p); });
+    return Object.values(g).filter(a => a.length >= 2).map(a => {
+      const m = M[a[0].target.metric], cnt = { up: 0, flat: 0, down: 0 };
+      a.forEach(p => { const d = predDir(p, m); if (d) cnt[d]++; });
+      const res = a.map(p => EV[p.id]).find(ev => ev.actual != null);
+      return { m, end: a[0].target.end_label, n: a.length, cnt, res, items: a };
+    });
+  }
+  function filtered() {
+    const q = F.q.trim().toLowerCase();
+    return P.filter(p => {
+      const e = E[p.entity_id], m = M[p.target.metric], ev = EV[p.id];
+      if (F.year && !p.published_at.startsWith(F.year)) return false;
+      if (F.topic && !p.topics.includes(F.topic)) return false;
+      if (F.entity && p.entity_id !== F.entity) return false;
+      if (F.status === 'closed' && ev.status === 'open') return false;
+      if (F.status && F.status !== 'closed' && ev.status !== F.status) return false;
+      if (F.meas && p.measurability !== F.meas) return false;
+      if (F.geo && (m ? m.geo : 'ארצי') !== F.geo) return false;
+      if (q) {
+        const hay = [e.name, e.org, e.role, D.sectors[e.sector], p.quote, p.context, p.published_at.slice(0, 4), m && m.label, m && m.geo, ...p.topics.map(t => D.topics[t])].join(' ').toLowerCase();
+        if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
+      }
+      return true;
+    }).sort((a, b) => b.published_at.localeCompare(a.published_at));
+  }
+  const opt = (v, l, cur) => '<option value="' + esc(v) + '"' + (v === cur ? ' selected' : '') + '>' + esc(l) + '</option>';
+  function tools() {
+    const years = [...new Set(P.map(p => p.published_at.slice(0, 4)))].sort().reverse();
+    const geos = [...new Set(P.map(p => M[p.target.metric] ? M[p.target.metric].geo : 'ארצי'))];
+    const topics = [...new Set(P.flatMap(p => p.topics))];
+    return '<div class="w-tools"><input type="search" id="w-q" placeholder="חפש אדם, גוף, עיר או נושא" value="' + esc(F.q) + '" aria-label="חיפוש">' +
+      '<div class="w-filters">' +
+      '<select id="w-f-year" aria-label="שנה">' + opt('', 'כל השנים', F.year) + years.map(y => opt(y, y, F.year)).join('') + '</select>' +
+      '<select id="w-f-topic" aria-label="נושא">' + opt('', 'כל הנושאים', F.topic) + topics.map(t => opt(t, D.topics[t], F.topic)).join('') + '</select>' +
+      '<select id="w-f-entity" aria-label="אדם או גוף">' + opt('', 'כל האנשים והגופים', F.entity) + D.entities.map(e => opt(e.id, e.name, F.entity)).join('') + '</select>' +
+      '<select id="w-f-status" aria-label="סטטוס">' + opt('', 'כל הסטטוסים', F.status) + opt('closed', 'נבדקו (סגורות)', F.status) + Object.keys(STAT).map(s => opt(s, STAT[s], F.status)).join('') + '</select>' +
+      '<select id="w-f-meas" aria-label="רמת מדידות">' + opt('', 'כל רמות המדידות', F.meas) + Object.keys(MEAS).map(s => opt(s, MEAS[s], F.meas)).join('') + '</select>' +
+      '<select id="w-f-geo" aria-label="אזור">' + opt('', 'כל האזורים', F.geo) + geos.map(g => opt(g, g, F.geo)).join('') + '</select>' +
+      '</div></div>';
+  }
+  function feed() { const a = filtered(); return '<p class="w-count">' + a.length + ' תחזיות</p><div class="w-feed">' + (a.map(p => card(p)).join('') || '<p class="h-mu">לא נמצאו תחזיות שמתאימות לחיפוש.</p>') + '</div>'; }
+
+  function viewList() {
+    const due = P.filter(checked).sort((a, b) => b.target.due.localeCompare(a.target.due)).slice(0, 3);
+    const cons = consensus();
+    const ents = D.entities.map(e => ({ e, n: P.filter(p => p.entity_id === e.id).length, m: P.filter(p => p.entity_id === e.id && p.measurability !== 'vague').length })).sort((a, b) => b.m - a.m);
+    return '<section class="w-hero"><div class="h-ey">מדד התחזיות של שוק הנדל"ן בישראל</div><h1>מי צדק?</h1>' +
+      '<p style="font-size:17px">מה אמרו על שוק הנדל"ן, ומה קרה בפועל.</p>' +
+      '<p class="h-mu">אנחנו שומרים תחזיות וטענות פומביות בזמן אמת, ומחכים לנתונים. כשהתוצאה מגיעה, אנחנו חוזרים לבדוק. אנחנו לא שומרים רק את התחזיות שהתממשו, אלא את כולן.</p>' +
+      (D.demo ? '<p class="w-demo">' + esc(D.disclaimer) + '</p>' : '') +
+      '<button class="w-link w-back" data-w-go="method">איך אנחנו בודקים תחזיות? ←</button></section>' +
+      '<div class="w-stats">' + stats().map(s => '<div class="w-stat"><b>' + s[0] + '</b><span>' + s[1] + '</span></div>').join('') + '</div>' +
+      '<div class="w-sec-hd"><h2>תחזיות שהגיע הזמן לבדוק</h2></div><div class="w-feed">' + due.map(p => card(p, true)).join('') + '</div>' +
+      (cons.length ? '<div class="w-sec-hd"><h2>מה כולם חשבו?</h2></div><div class="w-cons">' + cons.map(consCard).join('') + '</div>' : '') +
+      '<div class="w-sec-hd"><h2>האנשים והגופים במאגר</h2><span class="h-src">לפי מספר התחזיות המדידות, לא לפי דיוק</span></div><div class="w-ents">' +
+      ents.map(x => '<button class="w-ent" data-w-ent="' + x.e.id + '">' + avatar(x.e) + '<span><b>' + esc(x.e.name) + '</b><br><span class="w-sub">' + x.n + ' תחזיות · ' + x.m + ' מדידות</span></span></button>').join('') + '</div>' +
+      '<div class="w-sec-hd"><h2>כל התחזיות</h2></div>' + tools() + '<div id="w-feed">' + feed() + '</div>';
+  }
+  function consCard(c) {
+    const t = c.cnt.up + c.cnt.flat + c.cnt.down, pc = k => c.cnt[k] / t * 100;
+    const maj = Object.keys(c.cnt).sort((a, b) => c.cnt[b] - c.cnt[a])[0];
+    let verdict = 'עוד לא ידוע מה קרה בפועל.';
+    if (c.res) verdict = 'בפועל: ' + bd(fmt(c.res.actual, c.m)) + ' (' + DIR[c.res.dirA] + '). ' + (c.res.dirA === maj ? 'רוב התחזיות צפו את הכיוון הנכון.' : 'רוב התחזיות צפו ' + DIR[maj] + ', והכיוון בפועל היה שונה.');
+    return '<div class="w-card"><b>' + esc(c.m.label) + ' עד ' + esc(c.end) + '</b><span class="w-meta">' + c.n + ' תחזיות במאגר</span>' +
+      '<div class="w-split"><i style="width:' + pc('up') + '%;background:var(--green)"></i><i style="width:' + pc('flat') + '%;background:var(--ink3)"></i><i style="width:' + pc('down') + '%;background:var(--red)"></i></div>' +
+      '<div class="w-legend"><span style="--c:var(--green)">' + c.cnt.up + ' צפו עלייה</span><span style="--c:var(--ink3)">' + c.cnt.flat + ' יציבות</span><span style="--c:var(--red)">' + c.cnt.down + ' ירידה</span></div>' +
+      '<div class="w-res"><span class="w-meta">' + verdict + '</span></div>' + (c.n < 5 ? '<span class="w-warn">מדגם קטן: פחות מ-5 תחזיות. אי אפשר להסיק מכאן על "הקונצנזוס בשוק".</span>' : '') + '</div>';
+  }
+  function viewProfile(id) {
+    const e = E[id]; if (!e) return viewList();
+    const mine = P.filter(p => p.entity_id === id).sort((a, b) => b.published_at.localeCompare(a.published_at));
+    const done = mine.filter(checked), open = mine.filter(p => EV[p.id].status === 'open');
+    const conf = done.length < 5 ? 'מדגם קטן מאוד (' + done.length + ' תחזיות שנבדקו). אין להסיק מכך על רמת הדיוק.' : done.length < 15 ? 'מדגם קטן (' + done.length + ' תחזיות שנבדקו). יש להתייחס לנתונים בזהירות.' : '';
+    const topics = [...new Set(mine.flatMap(p => p.topics))];
+    const row = t => {
+      const a = done.filter(p => p.topics.includes(t)), dir = a.filter(p => EV[p.id].dirOk != null), ok = dir.filter(p => EV[p.id].dirOk), nums = a.filter(p => EV[p.id].acc != null);
+      const avg = nums.length ? Math.round(nums.reduce((s, p) => s + EV[p.id].acc, 0) / nums.length * 100) + '% (' + nums.length + ')' : '–';
+      return '<tr><td>' + esc(D.topics[t]) + '</td><td>' + mine.filter(p => p.topics.includes(t)).length + '</td><td>' + a.length + '</td><td>' + (dir.length ? ok.length + ' מתוך ' + dir.length : '–') + '</td><td>' + avg + '</td></tr>';
+    };
+    return '<button class="w-link w-back" data-w-go="">→ חזרה למי צדק?</button>' +
+      '<section class="h-c"><div class="w-who">' + avatar(e) + '<div><h1 style="font-size:24px">' + esc(e.name) + '</h1><div class="w-sub">' + esc(e.role) + (e.org !== e.name ? ', ' + esc(e.org) : '') + ' · ' + (e.type === 'person' ? 'אדם' : 'גוף') + ', ' + esc(D.sectors[e.sector]) + '</div></div></div>' +
+      '<div class="w-stats"><div class="w-stat"><b>' + mine.length + '</b><span>תחזיות במאגר</span></div><div class="w-stat"><b>' + done.length + '</b><span>נבדקו</span></div><div class="w-stat"><b>' + open.length + '</b><span>פתוחות</span></div><div class="w-stat"><b>' + mine.filter(p => p.measurability === 'vague').length + '</b><span>לא ניתנות לבדיקה</span></div></div>' +
+      (conf ? '<p class="w-warn">' + conf + '</p>' : '') + (e.demo ? '<p class="w-demo">פרופיל דמה להמחשה.</p>' : '') + '</section>' +
+      '<div class="w-sec-hd"><h2>ביצועים לפי תחום</h2></div><div style="overflow-x:auto"><table class="w-tbl"><thead><tr><th>תחום</th><th>תחזיות</th><th>נבדקו</th><th>כיוון נכון</th><th>דיוק מספרי (מספר תחזיות)</th></tr></thead><tbody>' + topics.map(row).join('') + '</tbody></table></div>' +
+      '<p class="h-src">כיוון נכון מוצג כ"X מתוך Y" ולא באחוזים, כדי שמדגם קטן לא ייראה כמו ציון. דיוק מספרי מחושב רק לתחזיות עם מספר.</p>' +
+      '<div class="w-sec-hd"><h2>כל התחזיות, לפי סדר כרונולוגי</h2></div><div class="w-tl">' + mine.map(p => card(p, true)).join('') + '</div>';
+  }
+  function viewMethod() {
+    return '<button class="w-link w-back" data-w-go="">→ חזרה למי צדק?</button><div class="w-method"><h1>איך אנחנו בודקים תחזיות?</h1>' +
+      '<p>המטרה היא שתוכלו לבדוק אותנו, ולא רק להאמין לנו. כל כלל כאן חל על כל התחזיות באותה צורה.</p>' +
+      '<h2>מה נחשב תחזית</h2><ul><li><b>מדידה מאוד:</b> משתנה, כיוון, מספר ותאריך יעד. למשל "המחירים יירדו ב-5% עד סוף 2027".</li><li><b>מדידה חלקית:</b> כיוון וטווח זמן, בלי מספר. נבדק רק הכיוון.</li><li><b>אמירה עמומה:</b> בלי משתנה או מועד ברורים. נשמרת במאגר, אבל לא מקבלת ציון.</li></ul>' +
+      '<h2>איך נבחר המדד</h2><p>לכל תחזית אנחנו בוחרים את המדד הרשמי הקרוב ביותר לנאמר: מדד מחירי הדירות של הלמ"ס למחירים, ריבית בנק ישראל לריבית, וכן הלאה. המדד שנבחר מופיע בכל כרטיס.</p>' +
+      '<h2>נקודת התחלה ונקודת סיום</h2><p>נקודת ההתחלה היא הנתון האחרון שהיה ידוע ביום הפרסום. נקודת הסיום נקבעת לפי הנאמר: "עד סוף 2025" נבדק מול הנתון של סוף 2025. "בשנה הקרובה" נבדק 12 חודשים מיום הפרסום. מדד מחירי הדירות הוא דו-חודשי, ולכן נבדק החלון הקרוב ביותר.</p>' +
+      '<h2>איך נקבע הסטטוס</h2><ul><li><b>התממשה במידה גבוהה:</b> הכיוון נכון, והפער בין התחזית לתוצאה בתוך סף שנקבע מראש לכל מדד (למשל 1.5 נקודות אחוז בשינוי המחירים, 0.1 נקודות אחוז בריבית).</li><li><b>התממשה חלקית:</b> הכיוון נכון, אבל הפער גדול מהסף.</li><li><b>לא התממשה:</b> הכיוון שנחזה לא התממש, או שהרף שנקבע לא נחצה.</li><li><b>עדיין פתוחה:</b> תאריך הבדיקה עוד לא הגיע, או שהנתון עוד לא פורסם.</li><li><b>לא ניתנת לבדיקה:</b> האמירה עמומה, או שאין נתון רשמי מתאים.</li></ul><p>"דיוק מספרי" מחושב כ-1 פחות הפער חלקי טווח ייחוס קבוע למדד. הוא מוצג רק לתחזיות עם מספר, ותמיד עם מספר התחזיות שעליהן הוא מבוסס.</p>' +
+      '<h2>מדגם קטן</h2><p>אדם או גוף עם 2 תחזיות שנבדקו לא יוצג כמדויק או כלא מדויק. עד 5 תחזיות שנבדקו מופיעה אזהרה בולטת, ועד 15 הערת זהירות. כיוון נכון מוצג כ"X מתוך Y" ולא באחוזים.</p>' +
+      '<h2>תחזית שהשתנתה</h2><p>כל אמירה נשמרת בנפרד, עם התאריך שלה. אם מישהו עדכן תחזית, שתי הגרסאות נשמרות, וכל אחת נבדקת מול הטווח שלה. לא מוחקים את הגרסה הקודמת.</p>' +
+      '<h2>נתונים שמתעדכנים בדיעבד</h2><p>נתונים רשמיים מתעדכנים לפעמים אחרי הפרסום. אנחנו שומרים את התוצאה כפי שהייתה ידועה ביום הבדיקה, יחד עם תאריך הבדיקה. אם עדכון מאוחר משנה את הסטטוס, זה נרשם כתיקון גלוי.</p>' +
+      '<h2>מקורות</h2><p>סדר העדיפות: מקור ראשוני, ראיון מלא, הודעה רשמית, דוח רשמי, ורק אחריהם כתבה שמצטטת ישירות. כשכתבה מנסחת מחדש משהו שנאמר, אנחנו חוזרים לנוסח המקורי.</p>' +
+      '<h2>איך אנחנו אוספים תחזיות</h2><p>כדי שהמאגר לא יהיה "אוסף של מי שטעה", אנחנו עוקבים אחרי רשימה קבועה של מקורות, ושומרים כל תחזית שמופיעה בהם, גם כאלה שהתממשו.</p>' +
+      '<h2>תיקונים</h2><p>בכל כרטיס יש כפתור "דיווח על טעות או חסר הקשר". תיקון שהתקבל מופיע בכרטיס עם תאריך והסבר. אנחנו לא מוחקים בשקט.</p>' +
+      '<h2>מה אנחנו לא עושים</h2><p>אנחנו לא קובעים במי להאמין, לא מדרגים "הכי גרועים", ולא משתמשים במילים כמו "שקר". אנחנו מציגים היסטוריה מדידה, ואתם מחליטים.</p></div>';
+  }
+
+  // ── rendering & events ──
+  const app = () => document.getElementById('w-app');
+  function render(sub) {
+    const el = app(); if (!el || !D) return;
+    if (sub === 'method') el.innerHTML = viewMethod();
+    else if (sub && E[sub]) el.innerHTML = viewProfile(sub);
+    else { el.innerHTML = viewList(); if (sub && EV[sub]) { const c = document.getElementById('w-' + sub); if (c) { toggle(sub, true); c.scrollIntoView({ block: 'start' }); return; } } }
+    window.scrollTo(0, 0);
+  }
+  function toggle(id, force) {
+    document.querySelectorAll('#w-' + id + ' .w-det, [data-pid="' + id + '"] .w-det').forEach(d => { d.hidden = force ? false : !d.hidden; });
+  }
+  function go(sub) { history.replaceState(null, '', '#predictions' + (sub ? '/' + sub : '')); render(sub); }
+  function openReport(id) {
+    const dlg = document.getElementById('w-report'); if (!dlg) return;
+    document.getElementById('w-r-id').value = id + ' · ' + (P.find(p => p.id === id) || {}).quote;
+    document.getElementById('w-r-msg').hidden = true;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  document.addEventListener('click', ev => {
+    const t = ev.target.closest('[data-w-ent],[data-w-toggle],[data-w-report],[data-w-go],[data-w-open]'); if (!t) return;
+    if (t.dataset.wEnt) { ev.preventDefault(); showTab(); go(t.dataset.wEnt); }
+    else if (t.dataset.wToggle) toggle(t.dataset.wToggle);
+    else if (t.dataset.wReport) openReport(t.dataset.wReport);
+    else if (t.dataset.wGo != null) { ev.preventDefault(); showTab(); go(t.dataset.wGo); }
+    else if (t.dataset.wOpen) { ev.preventDefault(); showTab(); go(t.dataset.wOpen); }
+  });
+  document.addEventListener('input', ev => {
+    if (!ev.target.closest('#w-app')) return;
+    const id = ev.target.id; if (id === 'w-q') F.q = ev.target.value; else if (id && id.startsWith('w-f-')) F[id.slice(4)] = ev.target.value; else return;
+    const f = document.getElementById('w-feed'); if (f) f.innerHTML = feed();
+  });
+  document.addEventListener('submit', ev => {
+    if (ev.target.id !== 'w-report-form') return;
+    ev.preventDefault(); document.getElementById('w-r-msg').hidden = false;
+  });
+  document.addEventListener('click', ev => { if (ev.target.id === 'w-r-close') document.getElementById('w-report').close(); });
+  function showTab() { const b = document.querySelector('.nb[data-page="predictions"]'); if (b && !b.classList.contains('on')) b.click(); }
+
+  // home widget (tab "היום")
+  function renderHome() {
+    const el = document.getElementById('h-who'); if (!el || !D) return;
+    const due = P.filter(checked).sort((a, b) => b.target.due.localeCompare(a.target.due)).slice(0, 3);
+    const fresh = P.filter(p => EV[p.id].status === 'open').sort((a, b) => b.published_at.localeCompare(a.published_at)).slice(0, 3);
+    const mini = p => { const e = E[p.entity_id], ev = EV[p.id], m = M[p.target.metric];
+      return '<article class="w-card w-compact"><span class="w-sub">' + dLong(p.published_at) + ', ' + esc(e.name) + ' אמר/ה:</span><blockquote class="w-q">"' + esc(p.quote) + '"</blockquote>' +
+        (ev.status === 'open' ? '<span class="w-meta">נבדוק ב-' + dShort(p.target.due) + '</span>' : '<span class="w-meta">בפועל: <b>' + bd(fmt(ev.actual, m)) + '</b></span>') + statusPill(ev) +
+        '<button class="w-link" data-w-open="' + p.id + '">לבדיקה המלאה ←</button></article>'; };
+    el.innerHTML = '<div class="h-hd"><div class="h-ey">מי צדק? · תחזיות שהגיע הזמן לבדוק</div><button class="h-lnk" data-w-go="">לכל התחזיות ←</button></div><div class="w-feed">' + due.map(mini).join('') + '</div>' +
+      '<div class="h-hd"><div class="h-ey">נכנסו למעקב לאחרונה</div></div><div class="w-feed">' + fresh.map(mini).join('') + '</div>' + (D.demo ? '<p class="w-demo">' + esc(D.disclaimer) + '</p>' : '');
+  }
+
+  function load() {
+    if (!ready) ready = WhoData.load().then(d => {
+      D = d; M = d.metrics; E = Object.fromEntries(d.entities.map(e => [e.id, e])); P = d.predictions;
+      P.forEach(p => { EV[p.id] = evaluate(p); });
+      renderHome();
+    }).catch(() => { const el = app(); if (el) el.innerHTML = '<p class="h-mu">לא הצלחנו לטעון את מאגר התחזיות. נסו לרענן את העמוד.</p>'; });
+    return ready;
+  }
+  load();
+  return { route: sub => load().then(() => render(sub || '')), evaluate: p => evaluate(p) };
+})();
+document.querySelector('.nb[data-page="predictions"]').addEventListener('click', () => { if (!location.hash.startsWith('#predictions/')) Who.route(''); });
+
+if(location.hash.startsWith('#predictions')) openFromHash();
+
+// ═══ NEWS (חדשות): full feed from data/site/news_feed.json, loaded on first open ═══
+var News=(function(){
+  let D=null,ready=null,shown=30;const F={q:'',outlet:'',topic:'',check:''};
+  const esc=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const dd=x=>x.split('-').reverse().map(Number).join('.');
+  const opt=(v,l,cur)=>'<option value="'+esc(v)+'"'+(v===cur?' selected':'')+'>'+esc(l)+'</option>';
+  function list(){const q=F.q.trim();return D.articles.filter(a=>{
+    if(F.outlet&&a.outlet!==F.outlet)return false; if(F.topic&&a.topic!==F.topic)return false;
+    if(F.check==='checked'&&!a.claims.some(k=>k.verdict!=='unverifiable'))return false;
+    if(F.check&&F.check!=='checked'&&!a.claims.some(k=>k.verdict===F.check))return false;
+    if(q&&!q.split(/\s+/).every(w=>(a.headline+' '+a.summary+' '+a.outlet+' '+a.topic+' '+a.author+' '+a.claims.map(k=>k.text).join(' ')).includes(w)))return false;
+    return true;});}
+  function card(a){return '<article class="n-card"><div class="h-src">'+esc(a.outlet)+' · '+dd(a.date)+(a.author?' · '+esc(a.author):'')+' · '+esc(a.topic)+(a.cluster_outlets>1?' · סוקר ב-'+a.cluster_outlets+' כלי תקשורת':'')+'</div><h3><a href="'+esc(a.url)+'" target="_blank" rel="noopener">'+esc(a.headline)+'</a></h3>'+(a.summary?'<div class="h-mu">'+esc(a.summary)+'</div>':'')+
+    a.claims.map(k=>'<div class="n-claim"><span>"'+esc(k.text)+'"</span><span class="h-v '+k.verdict+'">'+esc(k.verdict_label)+'</span><span class="h-mu">'+esc(k.reason)+(k.source_url?' <a href="'+esc(k.source_url)+'" target="_blank" rel="noopener">מקור הנתון</a>':'')+'</span></div>').join('')+'</article>';}
+  function feed(){const a=list();return '<p class="w-count">'+a.length+' כתבות</p><div class="w-feed">'+a.slice(0,shown).map(card).join('')+'</div>'+(a.length>shown?'<button class="w-btn n-more" id="n-more">הצגת עוד</button>':'');}
+  function render(){const el=document.getElementById('n-app');if(!el||!D)return;
+    const outlets=[...new Set(D.articles.map(a=>a.outlet))],topics=[...new Set(D.articles.map(a=>a.topic))];
+    const cv=D.claims_by_verdict,tot=Object.values(cv).reduce((s,x)=>s+x,0);
+    el.innerHTML='<section class="w-hero"><div class="h-ey">חדשות הנדל"ן, בבדיקה מול הנתונים</div><h1>חדשות</h1><p class="h-mu">כל כתבות הנדל"ן מ-30 הימים האחרונים ('+D.window.split(' ')[0].split('..').map(dd).join(' עד ')+'). כל טענה מספרית נבדקת מול נתון רשמי שכבר נאסף. כשאין נתון מתאים, כתוב "לא ניתן לבדוק" ולא מנחשים.</p>'+
+      '<p class="h-src">הכתבות ממוינות מהחדשה לישנה. אין לנו נתוני צפיות, ולכן אנחנו לא מדרגים כתבות לפי פופולריות.</p></section>'+
+      '<div class="w-stats"><div class="w-stat"><b>'+D.articles.length+'</b><span>כתבות</span></div><div class="w-stat"><b>'+outlets.length+'</b><span>כלי תקשורת</span></div><div class="w-stat"><b>'+tot+'</b><span>טענות מספריות</span></div><div class="w-stat"><b>'+(cv['מאושש']||0)+'</b><span>מאוששות</span></div><div class="w-stat"><b>'+((cv['מדויק חלקית']||0)+(cv['מטעה']||0)+(cv['מנוגד לנתונים']||0))+'</b><span>לא מדויקות במלואן</span></div></div>'+
+      '<div class="w-tools"><input type="search" id="n-q" placeholder="חיפוש בכותרות, בתקצירים ובטענות" value="'+esc(F.q)+'" aria-label="חיפוש"><div class="w-filters">'+
+      '<select id="n-f-outlet" aria-label="כלי תקשורת">'+opt('','כל כלי התקשורת',F.outlet)+outlets.map(o=>opt(o,o,F.outlet)).join('')+'</select>'+
+      '<select id="n-f-topic" aria-label="נושא">'+opt('','כל הנושאים',F.topic)+topics.map(o=>opt(o,o,F.topic)).join('')+'</select>'+
+      '<select id="n-f-check" aria-label="בדיקה">'+opt('','כל הכתבות',F.check)+opt('checked','רק כתבות עם טענה שנבדקה',F.check)+opt('confirmed','מאושש',F.check)+opt('partial','מדויק חלקית',F.check)+opt('misleading','מטעה',F.check)+opt('unverifiable','לא ניתן לבדוק',F.check)+'</select>'+
+      '</div></div><div id="n-feed">'+feed()+'</div>';}
+  document.addEventListener('input',e=>{const id=e.target.id;if(!id||!id.startsWith('n-'))return;if(id==='n-q')F.q=e.target.value;else F[id.slice(4)]=e.target.value;shown=30;document.getElementById('n-feed').innerHTML=feed();});
+  document.addEventListener('click',e=>{if(e.target.id==='n-more'){shown+=30;document.getElementById('n-feed').innerHTML=feed();}});
+  function load(){if(!ready)ready=getJSON('data/site/news_feed.json').then(d=>{D=d;}).catch(()=>{const el=document.getElementById('n-app');if(el)el.innerHTML='<p class="h-mu">לא הצלחנו לטעון את החדשות. נסו לרענן את העמוד.</p>';});return ready;}
+  return {open:()=>load().then(render)};
+})();
+document.querySelector('.nb[data-page="news"]').addEventListener('click',()=>News.open());
+if(location.hash==='#news') News.open();
+
+// ═══ ANALYTICS: count each tab as a page view ═══
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{
+  if(typeof gtag!=='function')return;
+  gtag('event','page_view',{page_title:'מדד · '+b.textContent.trim(),page_location:location.origin+location.pathname+'#'+b.dataset.page});
+}));
 </script>
 </body>
 </html>
